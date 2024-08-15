@@ -12,5 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e2f9e119f3c450c4e858932886136cfe, type: 3}
   m_Name: CharacterDialogue
   m_EditorClassIdentifier: 
-  charName: 
-  dialogue: []
+  charName: Elijah
+  dialogue:
+  - Hello!
+  - I am nigga and I so bad at TEKKEN.
