@@ -4,5 +4,8 @@
 EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
-  m_Scenes: []
+  m_Scenes:
+  - enabled: 1
+    path: Assets/Scenes/UIPrototyping.unity
+    guid: f7ad5713595cd8544aebe3e0abf08402
   m_configObjects: {}

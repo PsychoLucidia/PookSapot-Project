@@ -20,6 +20,14 @@ public class UiManager : MonoBehaviour
         }
     }
 
+    void Start()
+    {
+        foreach (GameObject obj in dialogueBox)
+        {
+            obj.SetActive(false);
+        }
+    }
+
     public void ActivateObject(int index)
     {
         dialogueBox[index].SetActive(true);
