@@ -10,11 +10,11 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: e2f9e119f3c450c4e858932886136cfe, type: 3}
-  m_Name: CharacterDialogue
+  m_Name: CharacterDemoNext
   m_EditorClassIdentifier: 
   charName: Duck
   dialogue:
   - Duck...
-  - Yes, I am a duck. Nice to meet you.
-  isThereNextDialogue: 0
-  nextDialogue: {fileID: 0}
+  - Hello, I am a duck and this is Goose.
+  isThereNextDialogue: 1
+  nextDialogue: {fileID: 11400000, guid: 3422aa1330cda044793276303fc601c7, type: 2}

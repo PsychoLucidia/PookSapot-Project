@@ -7,4 +7,7 @@ public class DialogueObject : ScriptableObject
 {
     public string charName;
     public string[] dialogue;
+
+    public bool isThereNextDialogue = false;
+    public DialogueObject nextDialogue;
 }

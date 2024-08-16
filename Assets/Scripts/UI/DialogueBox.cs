@@ -6,11 +6,16 @@ using UnityEngine;
 public class DialogueBox : MonoBehaviour
 { 
     [Header("Data")]
-    public DialogueObject dialogueData;
+    public static DialogueObject dialogueData;
+
+    [Header("Debug")]
+    [SerializeField] int dialogueLength;
+    [SerializeField] int boxTextLength;
+    [SerializeField] int numOfDialogues;
 
     [Header("Settings")]
     public int currentLine = 0;
-    public float textSpeed = 0.1f;
+    public float textSpeed = 0.03f;
 
     [Header("Text Components")]
     public TextMeshProUGUI nameText;
@@ -25,20 +30,61 @@ public class DialogueBox : MonoBehaviour
     {
     }
 
+    void OnEnable()
+    {
+        StartDialogue();
+    }
+
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetMouseButtonDown(0))
-        {
-            
-        }
+        BoxDebug();
     }
 
-    void StartDialogue()
+    public void StartDialogue()
     {
         this.gameObject.SetActive(true);
         currentLine = 0;
+        nameText.text = dialogueData.charName;
+        dialogueText.text = null;
+        StartCoroutine(PlayText());
+    }
 
+    public void NextLine()
+    {
+        if (dialogueText.text.Length == dialogueData.dialogue[currentLine].Length)
+        {
+            if (dialogueData.isThereNextDialogue && currentLine == dialogueData.dialogue.Length - 1)
+            {
+                dialogueData = dialogueData.nextDialogue;
+                StartDialogue();
+            }
+            else
+            {
+                currentLine++;
+                if (currentLine < dialogueData.dialogue.Length)
+                    {   
+                        Debug.Log("Next Line");
+                        dialogueText.text = null;
+                        StartCoroutine(PlayText());
+                    }
+                    else
+                    {
+                        Debug.Log("End Dialogue");
+                        EndDialogue();
+                    }
+            }
+        }
+        else
+        {
+            StopAllCoroutines();
+            dialogueText.text = dialogueData.dialogue[currentLine];
+        }
+    }
+
+    public void EndDialogue()
+    {
+        this.gameObject.SetActive(false);
     }
 
     IEnumerator PlayText()
@@ -48,5 +94,12 @@ public class DialogueBox : MonoBehaviour
             dialogueText.text += letter;
             yield return new WaitForSeconds(textSpeed);
         }
+    }
+
+    void BoxDebug()
+    {
+        dialogueLength = dialogueData.dialogue[currentLine].Length;
+        boxTextLength = dialogueText.text.Length;
+        numOfDialogues = dialogueData.dialogue.Length;
     }
 }

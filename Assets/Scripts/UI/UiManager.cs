@@ -2,15 +2,26 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public abstract class UiManager : MonoBehaviour
+public class UiManager : MonoBehaviour
 {
-    public virtual void OpenDialogue()
+    public static UiManager instance;
+
+    public GameObject[] dialogueBox;
+
+    void Awake()
     {
-        this.gameObject.SetActive(true);
+        if (instance == null)
+        {
+            instance = this;
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
     }
 
-    public virtual void CloseDialogue()
+    public void ActivateObject(int index)
     {
-        this.gameObject.SetActive(false);
+        dialogueBox[index].SetActive(true);
     }
 }
