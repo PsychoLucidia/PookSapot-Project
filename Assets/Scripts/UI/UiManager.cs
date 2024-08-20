@@ -6,7 +6,8 @@ public class UiManager : MonoBehaviour
 {
     public static UiManager instance;
 
-    public GameObject[] dialogueBox;
+    public GameObject[] gameObjects;
+    public GameObject[] enableObject;
 
     void Awake()
     {
@@ -18,18 +19,23 @@ public class UiManager : MonoBehaviour
         {
             Destroy(gameObject);
         }
-    }
 
-    void Start()
-    {
-        foreach (GameObject obj in dialogueBox)
+        foreach (GameObject obj in gameObjects)
         {
             obj.SetActive(false);
         }
     }
 
+    void Start()
+    {
+        foreach (GameObject obj in enableObject)
+        {
+            obj.SetActive(true);
+        }
+    }
+
     public void ActivateObject(int index)
     {
-        dialogueBox[index].SetActive(true);
+        gameObjects[index].SetActive(true);
     }
 }
