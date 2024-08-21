@@ -14,6 +14,7 @@ public class PlayerMovementCC : MonoBehaviour
     [SerializeField] Vector3 _playerMovement;
     [SerializeField] Vector3 _vel;
     [SerializeField] bool _isGrounded = false;
+    [SerializeField] bool _isCamFlipped = false;
 
     [Header("Components (Public)")]
     public CharacterController controller;
@@ -48,6 +49,7 @@ public class PlayerMovementCC : MonoBehaviour
         }
         else
         {
+            if (this.transform.position.x <= 0.1f)
             _playerMovement = transform.right * -_horizonMove + transform.forward * _verticalMove;
         }
         
