@@ -2096,8 +2096,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0c3f4d0037accc240b69487af4082b01, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  dialogueBox:
+  gameObjects:
   - {fileID: 1165515654}
+  enableObject: []
 --- !u!1 &1537789814
 GameObject:
   m_ObjectHideFlags: 0

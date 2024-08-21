@@ -1,9 +1,12 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 
-public class GameManager : MonoBehaviour
+public class EnemyManager : MonoBehaviour
 {
+    public EnemyState state;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -15,4 +18,16 @@ public class GameManager : MonoBehaviour
     {
         
     }
+
+    void Attack()
+    {
+        
+    }
+}
+
+public enum EnemyState
+{
+    Move,
+    MoveClose,
+    Attack
 }
