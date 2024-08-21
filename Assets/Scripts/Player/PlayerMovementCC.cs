@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using JetBrains.Annotations;
 using UnityEngine;
 
 public class PlayerMovementCC : MonoBehaviour
@@ -11,15 +12,18 @@ public class PlayerMovementCC : MonoBehaviour
     [SerializeField] float _speed = 5f;
 
     [Header("Components (Private)")]
+    [SerializeField] float _moveX;
+    [SerializeField] float _moveZ;
     [SerializeField] Vector3 _playerMovement;
     [SerializeField] Vector3 _vel;
     [SerializeField] bool _isGrounded = false;
-    [SerializeField] bool _isCamFlipped = false;
 
     [Header("Components (Public)")]
     public CharacterController controller;
     public LayerMask layerMask;
     public float playerHeight = 2f;
+    public CameraPos cameraPos;
+    public ControlFlip controlFlip;
 
     // Start is called before the first frame update
     void Start()
@@ -30,6 +34,7 @@ public class PlayerMovementCC : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        SetCamEnum();
         MovePlayer();
         SetGravity();
         GroundCheck();
@@ -40,18 +45,43 @@ public class PlayerMovementCC : MonoBehaviour
         _horizonMove = Input.GetAxis("Horizontal");
         _verticalMove = Input.GetAxis("Vertical");
 
-
-        if (this.transform.position.x >= 0.1f)
+        if (cameraPos == CameraPos.Left)
         {
-            _playerMovement = transform.right * _horizonMove + transform.forward * _verticalMove;
-
-            
+            _moveX = _horizonMove;
         }
         else
         {
-            if (this.transform.position.x <= 0.1f)
-            _playerMovement = transform.right * -_horizonMove + transform.forward * _verticalMove;
+            _moveX = -_horizonMove;
         }
+
+        if (cameraPos == CameraPos.Left)
+        {
+            if (controlFlip == ControlFlip.Flipped && _verticalMove <= 0.9f)
+            {
+                controlFlip = ControlFlip.NoFlip;
+                _moveZ = 0;
+            }
+
+            if (controlFlip == ControlFlip.NoFlip)
+            {
+                _moveZ = _verticalMove;
+            }
+        }
+        else
+        {
+            if (controlFlip == ControlFlip.NoFlip && _verticalMove <= 0.9f)
+            {
+                controlFlip = ControlFlip.Flipped;
+                _moveZ = 0;
+            }
+
+            if (controlFlip == ControlFlip.Flipped)
+            {
+                _moveZ = -_verticalMove;
+            }
+        }
+
+        _playerMovement = transform.right * _moveX + transform.forward * _moveZ;
         
         controller.Move(_playerMovement * _speed * Time.deltaTime);
     }
@@ -80,4 +110,28 @@ public class PlayerMovementCC : MonoBehaviour
         Gizmos.color = Color.green;
         Gizmos.DrawRay(transform.position, Vector3.down * playerHeight);
     }
+
+    void SetCamEnum()
+    {
+        if (this.transform.position.x > 0)
+        {
+            cameraPos = CameraPos.Left;
+        }
+        else
+        {
+            cameraPos = CameraPos.Right;
+        }
+    }
+}
+
+public enum CameraPos
+{
+    Left,
+    Right
+}
+
+public enum ControlFlip
+{
+    NoFlip,
+    Flipped
 }

@@ -25,7 +25,7 @@ public class CameraController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (player.transform.position.z >= 0.1f)
+        if (player.transform.position.z > 0)
         {
             SetCameraAngle(new Vector3(transposer.m_FollowOffset.x, transposer.m_FollowOffset.y, 3.82f));
         }
@@ -34,7 +34,7 @@ public class CameraController : MonoBehaviour
             SetCameraAngle(new Vector3(transposer.m_FollowOffset.x, transposer.m_FollowOffset.y, -3.82f));
         }
 
-        if (player.transform.position.x >= 0.1f)
+        if (player.transform.position.x > 0)
         {
             SetCameraPosition(new Vector3(camDistance, transposer.m_FollowOffset.y, transposer.m_FollowOffset.z));
         }

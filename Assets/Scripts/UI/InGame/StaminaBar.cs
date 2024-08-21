@@ -53,7 +53,7 @@ public class StaminaBar : MonoBehaviour
 
     void SetStaminaPosition(float value)
     {
-        if (_playerTransform.position.x >= 0.1f)
+        if (_playerTransform.position.x > 0)
         {
             _runtimeUIOffset.z = Mathf.Lerp(_runtimeUIOffset.z, value, 10f * Time.deltaTime);
         }
