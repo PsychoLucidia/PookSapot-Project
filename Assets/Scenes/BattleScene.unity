@@ -20,13 +20,13 @@ RenderSettings:
   m_FogDensity: 0.01
   m_LinearFogStart: 0
   m_LinearFogEnd: 300
-  m_AmbientSkyColor: {r: 0.212, g: 0.227, b: 0.259, a: 1}
+  m_AmbientSkyColor: {r: 0.43396223, g: 0.43396223, b: 0.43396223, a: 1}
   m_AmbientEquatorColor: {r: 0.114, g: 0.125, b: 0.133, a: 1}
   m_AmbientGroundColor: {r: 0.047, g: 0.043, b: 0.035, a: 1}
   m_AmbientIntensity: 1
-  m_AmbientMode: 0
-  m_SubtractiveShadowColor: {r: 0.42, g: 0.478, b: 0.627, a: 1}
-  m_SkyboxMaterial: {fileID: 10304, guid: 0000000000000000f000000000000000, type: 0}
+  m_AmbientMode: 3
+  m_SubtractiveShadowColor: {r: 0.5660378, g: 0.5660378, b: 0.5660378, a: 0.6745098}
+  m_SkyboxMaterial: {fileID: 0}
   m_HaloStrength: 0.5
   m_FlareStrength: 1
   m_FlareFadeSpeed: 3
@@ -416,6 +416,9 @@ MonoBehaviour:
   _verticalMove: 0
   _gravity: -9.81
   _speed: 5
+  _dashMultiplier: 3
+  _moveX: 0
+  _moveZ: 0
   _playerMovement: {x: 0, y: 0, z: 0}
   _vel: {x: 0, y: 0, z: 0}
   _isGrounded: 0
@@ -424,6 +427,9 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 64
   playerHeight: 0.6
+  cameraPos: 0
+  controlFlip: 0
+  playerState: 0
 --- !u!1 &560790717
 GameObject:
   m_ObjectHideFlags: 0
@@ -784,11 +790,12 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 999552991}
+  - component: {fileID: 999552993}
   - component: {fileID: 999552990}
   - component: {fileID: 999552989}
   - component: {fileID: 999552987}
   - component: {fileID: 999552986}
-  - component: {fileID: 999552992}
+  - component: {fileID: 999552994}
   m_Layer: 0
   m_Name: Enemy
   m_TagString: Untagged
@@ -803,7 +810,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 999552985}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 6ee822a5a4890d54ca45c0b3957b8606, type: 3}
   m_Name: 
@@ -917,39 +924,68 @@ Transform:
   m_GameObject: {fileID: 999552985}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0.7071068, z: 0, w: 0.7071068}
-  m_LocalPosition: {x: -12.01, y: 11.46, z: 0}
+  m_LocalPosition: {x: -12.01, y: 10.56, z: 0}
   m_LocalScale: {x: 2.75, y: 1, z: 4.77}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 90, z: 0}
---- !u!54 &999552992
-Rigidbody:
+--- !u!114 &999552993
+MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 999552985}
-  serializedVersion: 4
-  m_Mass: 1
-  m_Drag: 0
-  m_AngularDrag: 0.05
-  m_CenterOfMass: {x: 0, y: 0, z: 0}
-  m_InertiaTensor: {x: 1, y: 1, z: 1}
-  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a9cf6de3af0a882469c537c883a45c68, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _threshold: 0
+  _timer: 0
+  _action: 0
+  _enemyMovement: {x: 0, y: 0, z: 0}
+  horizonMove: 0
+  verticalMove: 0
+  speed: 5
+  dashSpeed: 3
+  gravity: -9.81
+  enemyHeight: 0
+  _playerTransform: {fileID: 0}
+  _vel: {x: 0, y: 0, z: 0}
+  _isGrounded: 0
+  _horizonMoveIndex: 0
+  _verticalMoveIndex: 0
+  controller: {fileID: 0}
+  state: 0
+  gameState: 0
+--- !u!143 &999552994
+CharacterController:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 999552985}
+  m_Material: {fileID: 0}
   m_IncludeLayers:
     serializedVersion: 2
     m_Bits: 0
   m_ExcludeLayers:
     serializedVersion: 2
     m_Bits: 0
-  m_ImplicitCom: 1
-  m_ImplicitTensor: 1
-  m_UseGravity: 1
-  m_IsKinematic: 0
-  m_Interpolate: 0
-  m_Constraints: 0
-  m_CollisionDetection: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Height: 1
+  m_Radius: 0.01
+  m_SlopeLimit: 45
+  m_StepOffset: 0.3
+  m_SkinWidth: 0.08
+  m_MinMoveDistance: 0.001
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &1023351572
 GameObject:
   m_ObjectHideFlags: 0
@@ -1499,7 +1535,7 @@ Camera:
   m_Enabled: 1
   serializedVersion: 2
   m_ClearFlags: 1
-  m_BackGroundColor: {r: 0.19215687, g: 0.3019608, b: 0.4745098, a: 0}
+  m_BackGroundColor: {r: 0.2735849, g: 0.2735849, b: 0.2735849, a: 0}
   m_projectionMatrixMode: 1
   m_GateFitMode: 2
   m_FOVAxisMode: 0

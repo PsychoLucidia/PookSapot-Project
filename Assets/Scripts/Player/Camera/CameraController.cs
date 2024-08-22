@@ -46,7 +46,7 @@ public class CameraController : MonoBehaviour
 
     public void SetCameraAngle(Vector3 pos)
     {
-        transposer.m_FollowOffset = new Vector3(transposer.m_FollowOffset.x, transposer.m_FollowOffset.y, Mathf.Lerp(transposer.m_FollowOffset.z, pos.z, 10f * Time.deltaTime));
+        transposer.m_FollowOffset = new Vector3(transposer.m_FollowOffset.x, transposer.m_FollowOffset.y, Mathf.Lerp(transposer.m_FollowOffset.z, pos.z, 4f * Time.deltaTime));
     }
 
     public void SetCameraPosition(Vector3 pos)

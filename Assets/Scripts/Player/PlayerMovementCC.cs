@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using JetBrains.Annotations;
+using UnityEditor;
 using UnityEngine;
 
 public class PlayerMovementCC : MonoBehaviour
@@ -10,6 +11,7 @@ public class PlayerMovementCC : MonoBehaviour
     [SerializeField] float _verticalMove;
     [SerializeField] float _gravity = -9.81f;
     [SerializeField] float _speed = 5f;
+    [SerializeField] float _dashMultiplier = 3f;
 
     [Header("Components (Private)")]
     [SerializeField] float _moveX;
@@ -22,8 +24,11 @@ public class PlayerMovementCC : MonoBehaviour
     public CharacterController controller;
     public LayerMask layerMask;
     public float playerHeight = 2f;
+
+    [Header("State Enums")]
     public CameraPos cameraPos;
     public ControlFlip controlFlip;
+    public PlayerState playerState;
 
     // Start is called before the first frame update
     void Start()
@@ -34,6 +39,7 @@ public class PlayerMovementCC : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        CurrentPlayerState();
         SetCamEnum();
         MovePlayer();
         SetGravity();
@@ -45,15 +51,17 @@ public class PlayerMovementCC : MonoBehaviour
         _horizonMove = Input.GetAxis("Horizontal");
         _verticalMove = Input.GetAxis("Vertical");
 
-        if (cameraPos == CameraPos.Left)
+        // Flip left and right conrtols when the camera has been flipped
+        if (cameraPos == CameraPos.Left && playerState == PlayerState.Moving)
         {
             _moveX = _horizonMove;
         }
-        else
+        else if (cameraPos == CameraPos.Right && playerState == PlayerState.Moving)
         {
             _moveX = -_horizonMove;
         }
 
+        // Flip up and down controls when the camera is flipped and forward value is less than 0.9
         if (cameraPos == CameraPos.Left)
         {
             if (controlFlip == ControlFlip.Flipped && _verticalMove <= 0.9f)
@@ -86,11 +94,25 @@ public class PlayerMovementCC : MonoBehaviour
         controller.Move(_playerMovement * _speed * Time.deltaTime);
     }
 
+    void CurrentPlayerState()
+    {
+        Vector3 movementValue = new Vector3(_horizonMove, 0, _verticalMove);
+
+        if (movementValue.magnitude == 0)
+        {
+            playerState = PlayerState.Idle;
+        }
+        else if (movementValue.magnitude > 0)
+        {
+            playerState = PlayerState.Moving;
+        }
+    }
+
     void SetGravity()
     {
         if (_isGrounded)
         {
-            _vel.y = -9.81f;
+            _vel.y = _gravity;
         }
         else
         {
@@ -135,3 +157,5 @@ public enum ControlFlip
     NoFlip,
     Flipped
 }
+
+
