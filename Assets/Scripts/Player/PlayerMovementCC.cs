@@ -20,13 +20,16 @@ public class PlayerMovementCC : MonoBehaviour
     [SerializeField] Vector3 _playerMovement;
     [SerializeField] Vector3 _vel;
     [SerializeField] bool _isGrounded = false;
+    [SerializeField] float _hitboxActiveDelay = 0.2f;
+
 
     [Header("Components (Public)")]
+    public GameObject playerHitbox;
     public Transform lookAtPos;
     public CharacterController controller;
-    public Transform playerDistance;
     public LayerMask layerMask;
     public float playerHeight = 2f;
+    public bool isAttacking = false;
 
     [Header("State Enums")]
     public CameraPos cameraPos;
@@ -38,14 +41,15 @@ public class PlayerMovementCC : MonoBehaviour
     {
         controller = this.gameObject.GetComponent<CharacterController>();
         lookAtPos = GameObject.Find("LookAt").transform;
+        playerHitbox = this.gameObject.transform.Find("Hitbox").gameObject;
     }
 
     // Update is called once per frame
     void Update()
     {
+        if (GameManager.instance.gameState == GameState.InGame && playerState != PlayerState.Attack) { MovePlayer(); }
         CurrentPlayerState();
         SetCamEnum();
-        MovePlayer();
         SetGravity();
         GroundCheck();
     }
@@ -96,6 +100,11 @@ public class PlayerMovementCC : MonoBehaviour
         _playerMovement = transform.right * _moveX + transform.forward * _moveZ;
         
         controller.Move(_playerMovement * _speed * Time.deltaTime);
+
+        if (Input.GetMouseButtonDown(0) && playerState != PlayerState.Attack)
+        {
+            StartCoroutine(Attack());
+        }
     }
 
     void CurrentPlayerState()
@@ -149,6 +158,27 @@ public class PlayerMovementCC : MonoBehaviour
         {
             cameraPos = CameraPos.Right;
         }
+    }
+    
+    IEnumerator Attack()
+    {
+        _horizonMove = 0;
+        _verticalMove = 0;
+
+        playerState = PlayerState.Attack;
+
+        if (playerState == PlayerState.Attack) { Debug.Log("Attacking"); }
+        isAttacking = true;
+        yield return new WaitForSeconds(0.1f);
+        isAttacking = false;
+
+        yield return new WaitForSeconds(_hitboxActiveDelay);
+        playerHitbox.SetActive(true);
+        yield return new WaitForSeconds(0.05f);
+        playerHitbox.SetActive(false);
+
+        playerState = PlayerState.Idle;
+        yield break;
     }
 }
 

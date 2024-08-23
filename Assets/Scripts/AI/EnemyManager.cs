@@ -39,10 +39,10 @@ public class EnemyManager : MonoBehaviour
     public float moveMaxDistance;
     public CharacterController controller;
     public LayerMask groundLayer;
+    public bool isAttacking;
 
     [Header("Enum States")]
     public EnemyState state;
-    public GameState gameState;
 
     [Header("Attack Settings")]
     public float atkMinDistance;
@@ -65,7 +65,7 @@ public class EnemyManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (gameState == GameState.InGame)
+        if (GameManager.instance.gameState == GameState.InGame)
         {
             EnemyGravity();
             MoveIndexRandomizer();
