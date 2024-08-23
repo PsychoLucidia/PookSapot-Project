@@ -16,6 +16,7 @@ public class StaminaBar : MonoBehaviour
     [SerializeField] RectTransform _uiElement;
     [SerializeField] Camera _cam;
     [SerializeField] Transform _playerTransform;
+    [SerializeField] Transform _lookAtPos;
 
     void Awake()
     {
@@ -41,10 +42,13 @@ public class StaminaBar : MonoBehaviour
     void ComponentInit()
     {
         Transform transRoot = GameObject.Find("Player").transform;
-        objectPos = transRoot.transform.Find("StaminaPos");
+        Transform modelTransform = transRoot.transform.Find("Model");
+        objectPos = modelTransform.transform.Find("StaminaPos");
 
         Transform barRoot = this.gameObject.transform;
         _uiElement = barRoot.transform.Find("Stamina").GetComponent<RectTransform>();
+
+        _lookAtPos = GameObject.Find("LookAt").transform;
         
         _cam = Camera.main;
 
@@ -53,7 +57,7 @@ public class StaminaBar : MonoBehaviour
 
     void SetStaminaPosition(float value)
     {
-        if (_playerTransform.position.x > 0)
+        if (_playerTransform.position.x > _lookAtPos.position.x)
         {
             _runtimeUIOffset.z = Mathf.Lerp(_runtimeUIOffset.z, value, 10f * Time.deltaTime);
         }

@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using JetBrains.Annotations;
+using Unity.VisualScripting.FullSerializer;
 using UnityEditor;
 using UnityEngine;
 
@@ -21,7 +22,9 @@ public class PlayerMovementCC : MonoBehaviour
     [SerializeField] bool _isGrounded = false;
 
     [Header("Components (Public)")]
+    public Transform lookAtPos;
     public CharacterController controller;
+    public Transform playerDistance;
     public LayerMask layerMask;
     public float playerHeight = 2f;
 
@@ -34,6 +37,7 @@ public class PlayerMovementCC : MonoBehaviour
     void Start()
     {
         controller = this.gameObject.GetComponent<CharacterController>();
+        lookAtPos = GameObject.Find("LookAt").transform;
     }
 
     // Update is called once per frame
@@ -113,6 +117,8 @@ public class PlayerMovementCC : MonoBehaviour
         if (_isGrounded)
         {
             _vel.y = _gravity;
+
+            controller.Move(_vel * Time.deltaTime);
         }
         else
         {
@@ -135,7 +141,7 @@ public class PlayerMovementCC : MonoBehaviour
 
     void SetCamEnum()
     {
-        if (this.transform.position.x > 0)
+        if (this.transform.position.x > lookAtPos.position.x)
         {
             cameraPos = CameraPos.Left;
         }

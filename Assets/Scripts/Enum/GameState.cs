@@ -6,7 +6,12 @@ public enum GameState
 {
     Title,
     Menu,
-    Paused,
     InGame,
     GameOver,
+}
+
+public enum PauseState
+{
+    Paused,
+    Unpaused,
 }

@@ -7,6 +7,7 @@ public class CameraController : MonoBehaviour
 {
     public CinemachineVirtualCamera vcam;
     public Transform player;
+    public Transform lookAtPos;
     CinemachineTransposer transposer;
 
     public float camDistance = 10f;
@@ -17,6 +18,7 @@ public class CameraController : MonoBehaviour
         Transform rootObject = this.gameObject.transform;
 
         player = GameObject.Find("Player").transform;
+        lookAtPos = GameObject.Find("LookAt").transform;
         vcam = rootObject.transform.Find("Virtual Camera").GetComponent<CinemachineVirtualCamera>();
 
         transposer = vcam.GetCinemachineComponent<CinemachineTransposer>();
@@ -34,7 +36,7 @@ public class CameraController : MonoBehaviour
             SetCameraAngle(new Vector3(transposer.m_FollowOffset.x, transposer.m_FollowOffset.y, -3.82f));
         }
 
-        if (player.transform.position.x > 0)
+        if (player.transform.position.x > lookAtPos.position.x)
         {
             SetCameraPosition(new Vector3(camDistance, transposer.m_FollowOffset.y, transposer.m_FollowOffset.z));
         }

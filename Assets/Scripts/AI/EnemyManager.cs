@@ -10,6 +10,8 @@ public class EnemyManager : MonoBehaviour
     [SerializeField] float _timer = 0f;
     [SerializeField] int _action = 0;
     [SerializeField] Vector3 _enemyMovement;
+    [SerializeField] float _playerDistance; 
+    [SerializeField] float _tempTimer = 0f;
     
     [Header("Movement")]
     public float horizonMove = 0f;
@@ -20,7 +22,8 @@ public class EnemyManager : MonoBehaviour
     public float enemyHeight = 0f;
 
     [Header("Automated Movement")]
-    float _moveTimer;
+    float _horizonMoveTimer;
+    float _verticalMoveTimer;
     float _horizonMoveStateThreshold;
     float _verticalMoveStateThreshold;
 
@@ -30,19 +33,27 @@ public class EnemyManager : MonoBehaviour
     [SerializeField] Vector3 _vel;
     [SerializeField] bool _isGrounded = false;
     [SerializeField] float _horizonMoveIndex;
-    [SerializeField] float _verticalMoveIndex; 
-
+    [SerializeField] float _verticalMoveIndex;
 
     [Header("Components (Public)")]
+    public float moveMaxDistance;
     public CharacterController controller;
+    public LayerMask groundLayer;
 
     [Header("Enum States")]
     public EnemyState state;
     public GameState gameState;
 
+    [Header("Attack Settings")]
+    public float atkMinDistance;
+    public float atkMaxDistance;
+    public float minAttackProbability;
+    public float maxAttackProbability;
+
     void Awake()
     {
         controller = this.gameObject.GetComponent<CharacterController>();
+        _playerTransform = GameObject.Find("Player").transform;
     }
 
     // Start is called before the first frame update
@@ -54,32 +65,33 @@ public class EnemyManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        EnemyGravity();
-        MoveIndexRandomizer();
-
-        _timer += Time.deltaTime;
-        _threshold = Random.Range(0.5f, 2f);
-        if (_timer > _threshold && gameState == GameState.InGame)
+        if (gameState == GameState.InGame)
         {
-            Randomizer(Random.Range(0, 4));
-            _timer = 0f;
-        }
+            EnemyGravity();
+            MoveIndexRandomizer();
+            PlayerDistance();
+            EnemyPosition();
 
-        switch (state)
-        {
-            case EnemyState.None:
-                break;
-            case EnemyState.Move:
-                Move();
-                break;
-            case EnemyState.MoveClose:
-                break;
-            case EnemyState.MoveFar:
-                break;
-            case EnemyState.Attack:
-                break;
-            default:
-                break;
+            if (state != EnemyState.Attack || state != EnemyState.ForceForward || state != EnemyState.ForceBackward) { _timer += Time.deltaTime; }
+            if (state == EnemyState.ForceBackward) { _tempTimer -= Time.deltaTime; }
+
+            _threshold = Random.Range(0.5f, 2f);
+            if (_timer > _threshold)
+            {
+                Randomizer(Random.Range(0, 4));
+                _timer = 0f;
+            }
+
+            switch (state)
+            {
+                case EnemyState.None: EnemyIdle(); break;
+                case EnemyState.Move: Move(); break;
+                case EnemyState.MoveClose: MoveClose(); break;
+                case EnemyState.MoveFar: MoveFar(); break;
+                case EnemyState.ForceForward: ForceForward(); break;
+                case EnemyState.ForceBackward: ForceBackward(); break;
+                default: break;
+            }
         }
     }
 
@@ -89,30 +101,117 @@ public class EnemyManager : MonoBehaviour
 
         switch (action)
         {
-            case 0:
-                state = EnemyState.None;
-                break;
-            case 1:
-                state = EnemyState.Move;
-                break;
-            case 2:
-                state = EnemyState.MoveClose;
-                break;
-            case 3:
-                state = EnemyState.MoveFar;
-                break;
-            case 4:
-                state = EnemyState.Attack;
-                break;
-            default:
-                break;
+            case 0: state = EnemyState.None; break;
+            case 1: state = EnemyState.Move; break;
+            case 2: state = EnemyState.MoveClose; break;
+            case 3: state = EnemyState.MoveFar; break;
+            default: state = EnemyState.None; break;
         }
+    }
+
+    void EnemyIdle()
+    {
+        horizonMove = 0f;
+        verticalMove = 0f;
     }
 
     void Move()
     {
+        if (_horizonMoveIndex > 0)
+        {
+            horizonMove = 1f;
+        }
+        else
+        {
+            horizonMove = -1f;
+        }
+
+        verticalMove = 0f;
+
         _enemyMovement = transform.right * horizonMove + transform.forward * verticalMove;
-        controller.Move(_enemyMovement * speed * Time.deltaTime);
+        EnemyMovement(_enemyMovement);
+    }
+
+    void MoveClose()
+    {
+        if (_horizonMoveIndex > 0)
+        {
+            horizonMove = 1f;
+        }
+        else
+        {
+            horizonMove = -1f;
+        }
+
+        if (_verticalMoveIndex > -2f)
+        {
+            verticalMove = 1f;
+        }
+        else
+        {
+            verticalMove = -1f;
+        }
+
+        _enemyMovement = transform.right * horizonMove + transform.forward * verticalMove;
+        EnemyMovement(_enemyMovement);
+    }
+
+    void MoveFar()
+    {
+        if (_horizonMoveIndex > 0)
+        {
+            horizonMove = 1f;
+        }
+        else
+        {
+            horizonMove = -1f;
+        }
+
+        if (_verticalMoveIndex > 3f)
+        {
+            verticalMove = 1f;
+        }
+        else
+        {
+            verticalMove = -1f;
+        }
+
+        _enemyMovement = transform.right * horizonMove + transform.forward * verticalMove;
+        EnemyMovement(_enemyMovement);
+    }
+
+    void ForceForward()
+    {
+        if (_horizonMoveIndex > 0)
+        {
+            horizonMove = 1f;
+        }
+        else
+        {
+            horizonMove = -1f;
+        }
+
+        verticalMove = 1f;
+
+        _enemyMovement = transform.right * horizonMove + transform.forward * verticalMove;
+        EnemyMovement(_enemyMovement);
+    }
+
+    void ForceBackward()
+    {
+        if (_horizonMoveIndex > 0)
+        {
+            horizonMove = 1f;
+        }
+        else
+        {
+            horizonMove = -1f;
+        }
+
+        verticalMove = -1f;
+
+        _enemyMovement = transform.right * horizonMove + transform.forward * verticalMove;
+        EnemyMovement(_enemyMovement);
     }
 
     void EnemyGravity()
@@ -128,33 +227,66 @@ public class EnemyManager : MonoBehaviour
         }
     }
 
+    void EnemyMovement(Vector3 value)
+    {
+        controller.Move(value * speed * Time.deltaTime);
+    }
+
+    void PlayerDistance()
+    {
+        _playerDistance = Vector3.Distance(_playerTransform.position, this.transform.position);
+
+        if (moveMaxDistance < _playerDistance)
+        {
+            state = EnemyState.ForceForward;
+        }
+        else if (state == EnemyState.ForceForward)
+        {
+            state = EnemyState.Move;
+        }
+    }
+
     void OnCollisionEnter(Collision collision)
     {
-
+        if (collision.gameObject.CompareTag("Wall"))
+        {
+            state = EnemyState.None;
+        }
     }
 
     void MoveIndexRandomizer()
     {
-        _moveTimer += Time.deltaTime;
+        _horizonMoveTimer += Time.deltaTime;
+        _verticalMoveTimer += Time.deltaTime;
         _horizonMoveStateThreshold = Random.Range(0.5f, 1.5f);
+        _verticalMoveStateThreshold = Random.Range(0.5f, 1.5f);
 
-        if (_moveTimer > _horizonMoveStateThreshold)
+        if (_horizonMoveTimer > _horizonMoveStateThreshold)
         {
-            _horizonMoveIndex = Random.Range(0, 1);
-            _moveTimer = 0f;
+            _horizonMoveIndex = Random.Range(-5f, 5f);
+            _horizonMoveTimer = 0f;
         }
 
-        if (_moveTimer > _verticalMoveStateThreshold)
+        if (_verticalMoveTimer > _verticalMoveStateThreshold)
         {
-            _verticalMoveIndex = Random.Range(0, 1);
-            _moveTimer = 0f;
+            _verticalMoveIndex = Random.Range(-5f, 5f);
+            _verticalMoveTimer = 0f;
         }
     }
 
-
-    void HorizontalMovement()
+    void EnemyPosition()
     {
+        if (this.transform.position.x > 15f)
+        {
+            state = EnemyState.ForceBackward;
+            _tempTimer = Random.Range(0.5f, 1.5f);
+        }
 
+        if (_tempTimer <= 0f && state == EnemyState.ForceBackward)
+        {
+            Debug.Log("Backward");
+            state = EnemyState.Move;
+        }
     }
 }
 
@@ -165,5 +297,7 @@ public enum EnemyState
     Move,
     MoveClose,
     MoveFar,
-    Attack
+    Attack,
+    ForceForward,
+    ForceBackward
 }
