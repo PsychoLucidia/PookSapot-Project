@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using FIMSpace.GroundFitter;
 using UnityEditor;
 using UnityEngine;
 
@@ -25,6 +26,8 @@ public class PlayerMovementCC : MonoBehaviour
     public SpiderStat spiderStat;
 
     [Header("Components (Public)")]
+    public FGroundFitter groundFitter;
+    public Rigidbody rb;
     public GameObject playerHitbox;
     public Transform lookAtPos;
     public CharacterController controller;
@@ -41,6 +44,8 @@ public class PlayerMovementCC : MonoBehaviour
     void Start()
     {
         controller = this.gameObject.GetComponent<CharacterController>();
+        groundFitter = this.gameObject.GetComponent<FGroundFitter>();
+        rb = this.gameObject.GetComponent<Rigidbody>();
         lookAtPos = GameObject.Find("LookAt").transform;
         playerHitbox = this.gameObject.transform.Find("Hitbox").gameObject;
         spiderStat = this.gameObject.GetComponent<SpiderStat>();
@@ -53,6 +58,7 @@ public class PlayerMovementCC : MonoBehaviour
         {
             SetGravity();
             GroundCheck();
+            PlayerGameOver();
 
             if (GameManager.instance.gameState == GameState.InGame)
             {
@@ -173,6 +179,21 @@ public class PlayerMovementCC : MonoBehaviour
         else
         {
             cameraPos = CameraPos.Right;
+        }
+    }
+
+    public void PlayerGameOver()
+    {
+        if (spiderStat.health <= 0)
+        {
+            groundFitter.enabled = false;
+            controller.enabled = false;
+            rb.isKinematic = false;
+            rb.AddForce(Vector3.up * 10, ForceMode.Impulse);
+            GameManager.instance.gameState = GameState.GameOver;
+            playerState = PlayerState.Dead;
+
+            BattleManager.instance.GameOver();
         }
     }
     

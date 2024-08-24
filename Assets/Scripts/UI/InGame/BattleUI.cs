@@ -44,7 +44,7 @@ public class BattleUI : MonoBehaviour
     {
         LeanTween.moveLocal(spiderHealth.gameObject, healthPosition + 
             new Vector3(Random.Range(-shakeMagnitude, shakeMagnitude), Random.Range(-shakeMagnitude, shakeMagnitude), 0), shakeDuration / 10f)
-                .setLoopCount(10).setOnComplete(() => { spiderHealth.transform.localPosition = healthPosition; });
+                .setLoopPingPong(10).setOnComplete(() => { spiderHealth.transform.localPosition = healthPosition; });
     }
 
     public void FadeIn(float alpha, float time)

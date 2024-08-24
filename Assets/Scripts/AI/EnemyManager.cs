@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using FIMSpace.GroundFitter;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -30,6 +31,7 @@ public class EnemyManager : MonoBehaviour
 
 
     [Header("Components (Private)")]
+    [SerializeField] FGroundFitter groundFitter;
     [SerializeField] SpiderStat spiderStat;
     [SerializeField] Transform _playerTransform;
     [SerializeField] Vector3 _vel;
@@ -46,6 +48,7 @@ public class EnemyManager : MonoBehaviour
     public LayerMask groundLayer;
     public bool isAttacking;
     public GameObject enemyHitbox;
+    public Rigidbody rb;
 
     [Header("Enum States")]
     public EnemyState state;
@@ -63,6 +66,8 @@ public class EnemyManager : MonoBehaviour
     {
         spiderStat = this.gameObject.GetComponent<SpiderStat>();
         controller = this.gameObject.GetComponent<CharacterController>();
+        rb = this.gameObject.GetComponent<Rigidbody>();
+        groundFitter = this.gameObject.GetComponent<FGroundFitter>();
         enemyHitbox = this.gameObject.transform.Find("Hitbox").gameObject;
         _playerTransform = GameObject.Find("Player").transform;
     }
@@ -87,6 +92,7 @@ public class EnemyManager : MonoBehaviour
                 PlayerDistance();
                 EnemyPosition();
                 AttackProbabilityCheck();
+                EnemyGameOver();
 
                 if (state != EnemyState.Attack || state != EnemyState.ForceForward || state != EnemyState.ForceBackward) { _timer += Time.deltaTime; }
                 if (state == EnemyState.ForceBackward) { _tempTimer -= Time.deltaTime; }
@@ -282,6 +288,22 @@ public class EnemyManager : MonoBehaviour
         _attackProbability = Mathf.Lerp(maxAttackProbability, minAttackProbability, _normalizedDistance);
     }
 
+    public void EnemyGameOver()
+    {
+        if (spiderStat.health <= 0)
+        {
+            groundFitter.enabled = false;
+            controller.enabled = false;
+            rb.isKinematic = false;
+            rb.AddForce(Vector3.up * 10, ForceMode.Impulse);
+            GameManager.instance.gameState = GameState.GameOver;
+            state = EnemyState.Dead;
+
+            BattleManager.instance.GameOver();
+        }
+    }
+
+
     void AttackProbabilityCheck()
     {
         _normalizedProbability = _attackProbability / 100;
@@ -366,5 +388,6 @@ public enum EnemyState
     MoveFar,
     Attack,
     ForceForward,
-    ForceBackward
+    ForceBackward,
+    Dead
 }
