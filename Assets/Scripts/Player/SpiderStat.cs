@@ -55,6 +55,7 @@ public class SpiderStat : MonoBehaviour
         StatClamp();
 
         StaminaRegen();
+        
     }
 
     public void Attack()

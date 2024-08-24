@@ -6,12 +6,14 @@ using UnityEngine.UI;
 public class TitleTween : MonoBehaviour
 {
     [Header("Transforms")]
+    public Transform rootTransform;
     public Transform logoTransform;
     public Transform pookSapotTransform;
     public Transform labananTransform;
     public Transform pressBtnTransform;
 
     [Header("Canvas Groups")]
+    public CanvasGroup rootCG;
     public CanvasGroup logoCG;
     public CanvasGroup barCG;
     public CanvasGroup pressBtnCG;
@@ -185,6 +187,17 @@ public class TitleTween : MonoBehaviour
     {
         pressBtnCG.alpha = alpha;
         LeanTween.moveLocalX(pressBtnTransform.gameObject, pos.x, time).setEaseOutCirc();
+    }
+
+    public void GoMainMenu()
+    {
+        rootCG.alpha = 1f;
+        rootTransform.localScale = new Vector3(1f, 1f, 1);
+        LeanTween.scale(rootTransform.gameObject, new Vector3(1.1f, 1.1f, 1), 0.5f).setEaseInCubic().setOnComplete(() => {
+            UiManager.instance.gameObjects[1].SetActive(true);
+            UiManager.instance.gameObjects[2].SetActive(false);
+        });
+        LeanTween.alphaCanvas(rootCG, 0, 0.5f).setEaseInCubic();
     }
 
     // Cancels all tweens on the TitleTween object.

@@ -33,6 +33,7 @@ public class Fader : MonoBehaviour
     {
         if (!_enabled)
         {
+            faderCG.alpha = 1;
             FadeEnable(0, 0.5f, false, 0);
             _enabled = true;
         }
@@ -56,5 +57,12 @@ public class Fader : MonoBehaviour
                 this.gameObject.SetActive(false);
             }
         });
+    }
+
+    public void GoToBattle()
+    {
+        faderCG.alpha = 0;
+        UiManager.instance.gameObjects[3].SetActive(true);
+        FadeEnable(1, 0.5f, true, 1);
     }
 }
