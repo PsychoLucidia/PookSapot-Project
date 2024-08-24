@@ -34,6 +34,8 @@ public class PlayerMovementCC : MonoBehaviour
     public LayerMask layerMask;
     public float playerHeight = 2f;
     public bool isAttacking = false;
+    public AudioSource soundMove;
+    public AudioSource soundAttack;
 
     [Header("State Enums")]
     public CameraPos cameraPos;
@@ -82,10 +84,12 @@ public class PlayerMovementCC : MonoBehaviour
         if (cameraPos == CameraPos.Left && playerState == PlayerState.Moving)
         {
             _moveX = _horizonMove;
+            soundMove.Play();
         }
         else if (cameraPos == CameraPos.Right && playerState == PlayerState.Moving)
         {
             _moveX = -_horizonMove;
+            soundMove.Play();
         }
 
         // Flip up and down controls when the camera is flipped and forward value is less than 0.9
@@ -95,11 +99,13 @@ public class PlayerMovementCC : MonoBehaviour
             {
                 controlFlip = ControlFlip.NoFlip;
                 _moveZ = 0;
+                soundMove.Play();
             }
 
             if (controlFlip == ControlFlip.NoFlip)
             {
                 _moveZ = _verticalMove;
+                soundMove.Play();
             }
         }
         else
@@ -108,11 +114,13 @@ public class PlayerMovementCC : MonoBehaviour
             {
                 controlFlip = ControlFlip.Flipped;
                 _moveZ = 0;
+                soundMove.Play();
             }
 
             if (controlFlip == ControlFlip.Flipped)
             {
                 _moveZ = -_verticalMove;
+                soundMove.Play();
             }
         }
 
@@ -126,6 +134,7 @@ public class PlayerMovementCC : MonoBehaviour
             _attackCoroutine = StartCoroutine(Attack());
             _isAttackCoroutineRunning = true;
             spiderStat.Attack();
+            soundAttack.Play();
         }
     }
 
