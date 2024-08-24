@@ -1386,6 +1386,7 @@ MonoBehaviour:
   dashSpeed: 3
   gravity: -9.81
   enemyHeight: 1.3
+  groundFitter: {fileID: 0}
   spiderStat: {fileID: 0}
   _playerTransform: {fileID: 0}
   _vel: {x: 0, y: 0, z: 0}
@@ -1401,6 +1402,7 @@ MonoBehaviour:
     m_Bits: 64
   isAttacking: 0
   enemyHitbox: {fileID: 0}
+  rb: {fileID: 0}
   state: 0
   atkMinDistance: 1
   atkMaxDistance: 10
