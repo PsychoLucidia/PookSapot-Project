@@ -1,7 +1,5 @@
 using System.Collections;
 using System.Collections.Generic;
-using JetBrains.Annotations;
-using Unity.VisualScripting.FullSerializer;
 using UnityEditor;
 using UnityEngine;
 
@@ -12,16 +10,19 @@ public class PlayerMovementCC : MonoBehaviour
     [SerializeField] float _verticalMove;
     [SerializeField] float _gravity = -9.81f;
     [SerializeField] float _speed = 5f;
-    [SerializeField] float _dashMultiplier = 3f;
 
     [Header("Components (Private)")]
     [SerializeField] float _moveX;
     [SerializeField] float _moveZ;
     [SerializeField] Vector3 _playerMovement;
     [SerializeField] Vector3 _vel;
+    [SerializeField] float _hitboxActiveDelay = 0.7f;
     [SerializeField] bool _isGrounded = false;
-    [SerializeField] float _hitboxActiveDelay = 0.2f;
+    [SerializeField] bool _isAttackCoroutineRunning = false;
+    Coroutine _attackCoroutine;
 
+    [Header("Spider Stat")]
+    public SpiderStat spiderStat;
 
     [Header("Components (Public)")]
     public GameObject playerHitbox;
@@ -42,16 +43,28 @@ public class PlayerMovementCC : MonoBehaviour
         controller = this.gameObject.GetComponent<CharacterController>();
         lookAtPos = GameObject.Find("LookAt").transform;
         playerHitbox = this.gameObject.transform.Find("Hitbox").gameObject;
+        spiderStat = this.gameObject.GetComponent<SpiderStat>();
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (GameManager.instance.gameState == GameState.InGame && playerState != PlayerState.Attack) { MovePlayer(); }
-        CurrentPlayerState();
-        SetCamEnum();
-        SetGravity();
-        GroundCheck();
+        if (GameManager.instance.pauseState == PauseState.Unpaused)
+        {
+            SetGravity();
+            GroundCheck();
+
+            if (GameManager.instance.gameState == GameState.InGame)
+            {
+                if (playerState != PlayerState.Attack)
+                {
+                    MovePlayer();
+                    CurrentPlayerState(); 
+                }
+                SetCamEnum();
+            }
+
+        }
     }
 
     public void MovePlayer()
@@ -101,9 +114,12 @@ public class PlayerMovementCC : MonoBehaviour
         
         controller.Move(_playerMovement * _speed * Time.deltaTime);
 
-        if (Input.GetMouseButtonDown(0) && playerState != PlayerState.Attack)
+        if (Input.GetMouseButtonDown(0) && playerState != PlayerState.Attack && !_isAttackCoroutineRunning && spiderStat.currentStamina > 15)
         {
-            StartCoroutine(Attack());
+            playerState = PlayerState.Attack;
+            _attackCoroutine = StartCoroutine(Attack());
+            _isAttackCoroutineRunning = true;
+            spiderStat.Attack();
         }
     }
 
@@ -162,10 +178,8 @@ public class PlayerMovementCC : MonoBehaviour
     
     IEnumerator Attack()
     {
-        _horizonMove = 0;
-        _verticalMove = 0;
-
-        playerState = PlayerState.Attack;
+        _moveX = 0;
+        _moveZ = 0;
 
         if (playerState == PlayerState.Attack) { Debug.Log("Attacking"); }
         isAttacking = true;
@@ -177,7 +191,9 @@ public class PlayerMovementCC : MonoBehaviour
         yield return new WaitForSeconds(0.05f);
         playerHitbox.SetActive(false);
 
+        yield return new WaitForSeconds(_hitboxActiveDelay);
         playerState = PlayerState.Idle;
+        _isAttackCoroutineRunning = false;
         yield break;
     }
 }

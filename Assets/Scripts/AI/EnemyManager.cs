@@ -11,6 +11,7 @@ public class EnemyManager : MonoBehaviour
     [SerializeField] int _action = 0;
     [SerializeField] Vector3 _enemyMovement;
     [SerializeField] float _playerDistance; 
+    [SerializeField] float _normalizedDistance;
     [SerializeField] float _tempTimer = 0f;
     
     [Header("Movement")]
@@ -29,17 +30,22 @@ public class EnemyManager : MonoBehaviour
 
 
     [Header("Components (Private)")]
+    [SerializeField] SpiderStat spiderStat;
     [SerializeField] Transform _playerTransform;
     [SerializeField] Vector3 _vel;
     [SerializeField] bool _isGrounded = false;
+    [SerializeField] bool _isAttackCoroutineRunning = false;
     [SerializeField] float _horizonMoveIndex;
     [SerializeField] float _verticalMoveIndex;
+    [SerializeField] float _hitboxActiveDelay;
+    Coroutine _enemyAttackCoroutine;
 
     [Header("Components (Public)")]
     public float moveMaxDistance;
     public CharacterController controller;
     public LayerMask groundLayer;
     public bool isAttacking;
+    public GameObject enemyHitbox;
 
     [Header("Enum States")]
     public EnemyState state;
@@ -49,10 +55,15 @@ public class EnemyManager : MonoBehaviour
     public float atkMaxDistance;
     public float minAttackProbability;
     public float maxAttackProbability;
+    [SerializeField] float _attackProbability;
+    [SerializeField] float _normalizedProbability;
+
 
     void Awake()
     {
+        spiderStat = this.gameObject.GetComponent<SpiderStat>();
         controller = this.gameObject.GetComponent<CharacterController>();
+        enemyHitbox = this.gameObject.transform.Find("Hitbox").gameObject;
         _playerTransform = GameObject.Find("Player").transform;
     }
 
@@ -65,32 +76,38 @@ public class EnemyManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (GameManager.instance.gameState == GameState.InGame)
+        if (GameManager.instance.pauseState == PauseState.Unpaused)
         {
             EnemyGravity();
-            MoveIndexRandomizer();
-            PlayerDistance();
-            EnemyPosition();
+            GroundCheck();
 
-            if (state != EnemyState.Attack || state != EnemyState.ForceForward || state != EnemyState.ForceBackward) { _timer += Time.deltaTime; }
-            if (state == EnemyState.ForceBackward) { _tempTimer -= Time.deltaTime; }
-
-            _threshold = Random.Range(0.5f, 2f);
-            if (_timer > _threshold)
+            if (GameManager.instance.gameState == GameState.InGame)
             {
-                Randomizer(Random.Range(0, 4));
-                _timer = 0f;
-            }
+                MoveIndexRandomizer();
+                PlayerDistance();
+                EnemyPosition();
+                AttackProbabilityCheck();
 
-            switch (state)
-            {
-                case EnemyState.None: EnemyIdle(); break;
-                case EnemyState.Move: Move(); break;
-                case EnemyState.MoveClose: MoveClose(); break;
-                case EnemyState.MoveFar: MoveFar(); break;
-                case EnemyState.ForceForward: ForceForward(); break;
-                case EnemyState.ForceBackward: ForceBackward(); break;
-                default: break;
+                if (state != EnemyState.Attack || state != EnemyState.ForceForward || state != EnemyState.ForceBackward) { _timer += Time.deltaTime; }
+                if (state == EnemyState.ForceBackward) { _tempTimer -= Time.deltaTime; }
+
+                _threshold = Random.Range(0.5f, 2f);
+                if (_timer > _threshold)
+                {
+                    Randomizer(Random.Range(0, 4));
+                    _timer = 0f;
+                }
+
+                switch (state)
+                {
+                    case EnemyState.None: EnemyIdle(); break;
+                    case EnemyState.Move: Move(); break;
+                    case EnemyState.MoveClose: MoveClose(); break;
+                    case EnemyState.MoveFar: MoveFar(); break;
+                    case EnemyState.ForceForward: ForceForward(); break;
+                    case EnemyState.ForceBackward: ForceBackward(); break;
+                    default: break;
+                }
             }
         }
     }
@@ -214,6 +231,17 @@ public class EnemyManager : MonoBehaviour
         EnemyMovement(_enemyMovement);
     }
 
+    void Attack()
+    {
+        if (spiderStat.currentStamina > spiderStat.staminaConsume && !_isAttackCoroutineRunning && state != EnemyState.Attack)
+        {
+            state = EnemyState.Attack;
+            _enemyAttackCoroutine = StartCoroutine(AttackEnum());
+            _isAttackCoroutineRunning = true;
+            spiderStat.Attack();
+        }
+    }
+
     void EnemyGravity()
     {
         if (_isGrounded)
@@ -225,6 +253,11 @@ public class EnemyManager : MonoBehaviour
             _vel.y += gravity * Time.deltaTime;
             controller.Move(_vel * Time.deltaTime);
         }
+    }
+
+    void GroundCheck()
+    {
+        _isGrounded = Physics.Raycast(transform.position, Vector3.down, enemyHeight, groundLayer);
     }
 
     void EnemyMovement(Vector3 value)
@@ -243,6 +276,19 @@ public class EnemyManager : MonoBehaviour
         else if (state == EnemyState.ForceForward)
         {
             state = EnemyState.Move;
+        }
+
+        _normalizedDistance = Mathf.InverseLerp(atkMinDistance, atkMaxDistance, _playerDistance);
+        _attackProbability = Mathf.Lerp(maxAttackProbability, minAttackProbability, _normalizedDistance);
+    }
+
+    void AttackProbabilityCheck()
+    {
+        _normalizedProbability = _attackProbability / 100;
+
+        if (Random.Range(0f, 1f) < _normalizedProbability)
+        {
+            Attack();
         }
     }
 
@@ -276,10 +322,10 @@ public class EnemyManager : MonoBehaviour
 
     void EnemyPosition()
     {
-        if (this.transform.position.x > 15f)
+        if (this.transform.position.x > 50f)
         {
             state = EnemyState.ForceBackward;
-            _tempTimer = Random.Range(0.5f, 1.5f);
+            _tempTimer = Random.Range(5f, 7f);
         }
 
         if (_tempTimer <= 0f && state == EnemyState.ForceBackward)
@@ -287,6 +333,27 @@ public class EnemyManager : MonoBehaviour
             Debug.Log("Backward");
             state = EnemyState.Move;
         }
+    }
+
+    IEnumerator AttackEnum()
+    {
+        horizonMove = 0;
+        verticalMove = 0;
+
+        if (state == EnemyState.Attack) { Debug.Log("Enemy Attacking"); }
+        isAttacking = true;
+        yield return new WaitForSeconds(0.1f);
+        isAttacking = false;
+
+        yield return new WaitForSeconds(_hitboxActiveDelay);
+        enemyHitbox.SetActive(true);
+        yield return new WaitForSeconds(0.05f);
+        enemyHitbox.SetActive(false);
+
+        yield return new WaitForSeconds(_hitboxActiveDelay);
+        state = EnemyState.Move;
+        _isAttackCoroutineRunning = false;
+        yield break;
     }
 }
 
