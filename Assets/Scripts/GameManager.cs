@@ -26,7 +26,7 @@ public class GameManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        PauseStates();
     }
     
     public void PauseStates()
@@ -35,6 +35,7 @@ public class GameManager : MonoBehaviour
         {
             case PauseState.Paused: Time.timeScale = 0; break;
             case PauseState.Unpaused: Time.timeScale = 1; break;
+            
             default: break; 
         }
     }

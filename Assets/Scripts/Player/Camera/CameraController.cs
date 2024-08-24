@@ -19,7 +19,7 @@ public class CameraController : MonoBehaviour
 
         player = GameObject.Find("Player").transform;
         lookAtPos = GameObject.Find("LookAt").transform;
-        vcam = rootObject.transform.Find("Virtual Camera").GetComponent<CinemachineVirtualCamera>();
+        vcam = rootObject.transform.Find("VCAMGAMEPLAY").GetComponent<CinemachineVirtualCamera>();
 
         transposer = vcam.GetCinemachineComponent<CinemachineTransposer>();
     }

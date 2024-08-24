@@ -28,6 +28,7 @@ public class UiManager : MonoBehaviour
 
     void Start()
     {
+
         foreach (GameObject obj in enableObject)
         {
             obj.SetActive(true);
