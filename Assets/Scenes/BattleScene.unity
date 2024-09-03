@@ -4363,6 +4363,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Fader
       objectReference: {fileID: 0}
+    - target: {fileID: 573689637504820641, guid: f75ba5c27c7029f419e2d9bddf6bf91f, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 1647732012229501413, guid: f75ba5c27c7029f419e2d9bddf6bf91f, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
