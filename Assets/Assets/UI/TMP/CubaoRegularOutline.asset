@@ -70,7 +70,7 @@ Material:
     - _OutlineSoftness: 0
     - _OutlineUVSpeedX: 0
     - _OutlineUVSpeedY: 0
-    - _OutlineWidth: 0
+    - _OutlineWidth: 0.282
     - _PerspectiveFilter: 0.875
     - _Reflectivity: 10
     - _ScaleRatioA: 0.9
@@ -102,7 +102,7 @@ Material:
     - _FaceColor: {r: 1, g: 1, b: 1, a: 1}
     - _GlowColor: {r: 0, g: 1, b: 0, a: 0.5}
     - _MaskCoord: {r: 0, g: 0, b: 32767, a: 32767}
-    - _OutlineColor: {r: 0, g: 0, b: 0, a: 1}
+    - _OutlineColor: {r: 0.013702081, g: 0.0033465356, b: 0.051269468, a: 1}
     - _ReflectFaceColor: {r: 0, g: 0, b: 0, a: 1}
     - _ReflectOutlineColor: {r: 0, g: 0, b: 0, a: 1}
     - _SpecularColor: {r: 1, g: 1, b: 1, a: 1}
@@ -118,11 +118,11 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 71c1514a6bd24e1e882cebbe1904ce04, type: 3}
-  m_Name: CubaoRegular
+  m_Name: CubaoRegularOutline
   m_EditorClassIdentifier: 
-  hashCode: 1538784032
+  hashCode: -1001739456
   material: {fileID: -7716221115413097402}
-  materialHashCode: -160106240
+  materialHashCode: 146471776
   m_Version: 1.1.0
   m_SourceFontFileGUID: 26181bf7fc86b5744bbf9c2835aa2fe8
   m_SourceFontFile_EditorRef: {fileID: 12800000, guid: 26181bf7fc86b5744bbf9c2835aa2fe8, type: 3}
