@@ -11,6 +11,7 @@ public class BattleManager : MonoBehaviour
 
     public bool isGameOver = false;
 
+
     void Awake()
     {
         playerMovementCC = GameObject.Find("Player").GetComponent<PlayerMovementCC>();

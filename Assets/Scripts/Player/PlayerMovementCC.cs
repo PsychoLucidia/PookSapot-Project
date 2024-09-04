@@ -36,6 +36,7 @@ public class PlayerMovementCC : MonoBehaviour
     public bool isAttacking = false;
     public AudioSource soundMove;
     public AudioSource soundAttack;
+    public AudioSource soundDeath;
 
     [Header("State Enums")]
     public CameraPos cameraPos;
