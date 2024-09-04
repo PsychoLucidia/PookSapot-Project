@@ -20,6 +20,7 @@ public class OptionsBox : MonoBehaviour
     [Header("Settings")]
     [SerializeField] int optionsIndex;
     [SerializeField] int creditsIndex;
+    [SerializeField] int previousIndex;
 
     public List<Vector3> buttonPositions = new List<Vector3>();
 
@@ -46,7 +47,9 @@ public class OptionsBox : MonoBehaviour
 
     public void ChangeIndex(int index)
     {
+        previousIndex = optionsIndex;
         optionsIndex = index;
+
 
         switch (optionsIndex)
         {
@@ -56,6 +59,10 @@ public class OptionsBox : MonoBehaviour
             default:
                 break;
         }
+    }
+
+    void OnChangeIndex()
+    {
     }
 
     void OpenSounds()
