@@ -85,12 +85,10 @@ public class PlayerMovementCC : MonoBehaviour
         if (cameraPos == CameraPos.Left && playerState == PlayerState.Moving)
         {
             _moveX = _horizonMove;
-            soundMove.Play();
         }
         else if (cameraPos == CameraPos.Right && playerState == PlayerState.Moving)
         {
             _moveX = -_horizonMove;
-            soundMove.Play();
         }
 
         // Flip up and down controls when the camera is flipped and forward value is less than 0.9
@@ -100,13 +98,11 @@ public class PlayerMovementCC : MonoBehaviour
             {
                 controlFlip = ControlFlip.NoFlip;
                 _moveZ = 0;
-                soundMove.Play();
             }
 
             if (controlFlip == ControlFlip.NoFlip)
             {
                 _moveZ = _verticalMove;
-                soundMove.Play();
             }
         }
         else
@@ -115,13 +111,11 @@ public class PlayerMovementCC : MonoBehaviour
             {
                 controlFlip = ControlFlip.Flipped;
                 _moveZ = 0;
-                soundMove.Play();
             }
 
             if (controlFlip == ControlFlip.Flipped)
             {
                 _moveZ = -_verticalMove;
-                soundMove.Play();
             }
         }
 
@@ -202,6 +196,7 @@ public class PlayerMovementCC : MonoBehaviour
             rb.AddForce(Vector3.up * 10, ForceMode.Impulse);
             GameManager.instance.gameState = GameState.GameOver;
             playerState = PlayerState.Dead;
+            soundDeath.Play();
 
             BattleManager.instance.GameOver();
         }
