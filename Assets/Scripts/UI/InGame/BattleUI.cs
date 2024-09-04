@@ -28,7 +28,7 @@ public class BattleUI : MonoBehaviour
 
     }
 
-    void OnEnable()
+    void OnEnable() // enables the battle UI fade in animation
     {
         canvasGroup.alpha = 0;
         FadeIn(1, 0.2f);
@@ -40,19 +40,19 @@ public class BattleUI : MonoBehaviour
         
     }
 
-    public void ShakeHealth()
+    public void ShakeHealth()   // creates a shake animation to the health whenever the player takes damage
     {
         LeanTween.moveLocal(spiderHealth.gameObject, healthPosition + 
             new Vector3(Random.Range(-shakeMagnitude, shakeMagnitude), Random.Range(-shakeMagnitude, shakeMagnitude), 0), shakeDuration / 10f)
                 .setLoopPingPong(10).setOnComplete(() => { spiderHealth.transform.localPosition = healthPosition; });
     }
 
-    public void FadeIn(float alpha, float time)
+    public void FadeIn(float alpha, float time) 
     {
         LeanTween.alphaCanvas(canvasGroup, alpha, time);
     }
 
-    void OnDisable()
+    void OnDisable()    // stops the animation
     {
         LeanTween.cancel(this.gameObject);
         LeanTween.cancel(spiderHealth.gameObject);

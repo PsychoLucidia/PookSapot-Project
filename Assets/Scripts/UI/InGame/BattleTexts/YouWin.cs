@@ -21,7 +21,7 @@ public class YouWin : MonoBehaviour
         
     }
 
-    void OnEnable()
+    void OnEnable() //  once the game object is enabled, play the animation for the you win or you lose text
     {
         backTransform.localScale = new Vector3(0, 0, 1);
         textTransform.localScale = new Vector3(1.2f, 1.2f, 1);
@@ -30,7 +30,7 @@ public class YouWin : MonoBehaviour
         AnimateWin();
     }
 
-    public void AnimateWin()
+    public void AnimateWin()    // displays the animation on the screen for the you win and you lose text
     {
 
         LeanTween.scale(backTransform.gameObject, new Vector3(1.2f, 1.2f, 1), 0.2f).setEaseOutCubic().setOnComplete(() => {
@@ -43,12 +43,12 @@ public class YouWin : MonoBehaviour
         });
     }
 
-    void DisableGameObj()
+    void DisableGameObj()   //  disables the game object once the animation has finished
     {
         this.gameObject.SetActive(false);
     }
 
-    void OnDisable()
+    void OnDisable()    // if the game object is disabled, execute this code
     {
         LeanTween.cancel(this.gameObject);
         LeanTween.cancel(backTransform.gameObject);

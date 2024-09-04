@@ -13,7 +13,7 @@ public class BattleStart : MonoBehaviour
         
     }
 
-    void OnEnable()
+    void OnEnable() // enables the strart battle animation
     {
         battleStartBG.localScale = new Vector3(0, 0, 1);
         battleText.localScale = new Vector3(10, 10, 1);
@@ -29,7 +29,7 @@ public class BattleStart : MonoBehaviour
         
     }
 
-    public void StartBattle()
+    public void StartBattle()   // the animation for battle start
     {
         LeanTween.scale(battleText.gameObject, new Vector3(1f, 1f, 1f), 1f).setEaseInCubic();  
         LeanTween.moveLocal(startText.gameObject, new Vector3(-16.09f, 7.69f, 0f), 1f).setEaseInCubic().setOnComplete(() => {
@@ -43,7 +43,7 @@ public class BattleStart : MonoBehaviour
         });
     }
 
-    void ChangeState()
+    void ChangeState()  // handles the changes in the state of the game 
     {
         if (GameManager.instance.gameState != GameState.InGame)
         {
@@ -54,7 +54,7 @@ public class BattleStart : MonoBehaviour
         this.gameObject.SetActive(false);
     }
 
-    void OnDisable()
+    void OnDisable()    // cancels the animations
     {
         LeanTween.cancel(this.gameObject);
         LeanTween.cancel(battleStartBG.gameObject);

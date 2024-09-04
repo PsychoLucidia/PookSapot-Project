@@ -75,7 +75,7 @@ public class StaminaBar : MonoBehaviour
         spiderStat = GameObject.Find("Player").GetComponent<SpiderStat>();
     }
 
-    void SetStaminaPosition(float value)
+    void SetStaminaPosition(float value)    // sets the position of the stamina bar
     {
         if (_playerTransform.position.x > _lookAtPos.position.x)
         {
@@ -87,14 +87,14 @@ public class StaminaBar : MonoBehaviour
         }
     }
 
-    void StaminaBarFill()
+    void StaminaBarFill()   // determines the fill of the stamina bar
     {
         _fillRatio = spiderStat.currentStamina / spiderStat.stamina;
 
         staminaBar.fillAmount = _fillRatio;
     }
 
-    void FadeUI()
+    void FadeUI()   // determines when the stamina bar should fade in or fade out
     {
         if (_fillRatio < 1f && !_isVisible)
         {
