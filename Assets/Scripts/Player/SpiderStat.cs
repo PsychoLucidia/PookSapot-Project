@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 public class SpiderStat : MonoBehaviour
 {
-    [Header("Stats")]
+    [Header("Stats")]   // The set stats for the spiders
     public int health;
     public int maxHealth = 100;
     public float currentStamina;
@@ -58,23 +58,23 @@ public class SpiderStat : MonoBehaviour
         
     }
 
-    public void Attack()
+    public void Attack()    // is called once the player or AI attacks
     {
-        currentStamina -= staminaConsume;
-        curStaminaCooldown = staminaCooldown;
+        currentStamina -= staminaConsume;   // reduces the stamina when the player or AI attacks
+        curStaminaCooldown = staminaCooldown;   // sets the timer of stamina cooldown to 1 second before it starts regenrating
     }
 
     public void TakeDamage(int damage)
     {
-        if (!isInvulnerable)
+        if (!isInvulnerable)    // determines if the player or AI is not in an invulnerable state
         {
-            health -= damage - (spiderDefense / 2);
-            isInvulnerable = true;
-            Invoke("ResetInvulnerability", 0.5f);
+            health -= damage - (spiderDefense / 2); // the amount of health to be reduced when attacked
+            isInvulnerable = true;  // makes the player or AI invulnerable from attacks
+            Invoke("ResetInvulnerability", 0.5f);   // the player or AI will be invulnerable for 0.5 seconds
 
             if (!isEnemy)
             {
-                battleUI.ShakeHealth();
+                battleUI.ShakeHealth(); // the UI of the spider's health does a shake animation
             }
         }
     }
@@ -85,33 +85,33 @@ public class SpiderStat : MonoBehaviour
         health = Mathf.Clamp(health, 0, maxHealth);
     }
 
-    void StaminaRegen()
+    void StaminaRegen() // regenerates the stamina bar after some time if the player or AI stopped attacking
     {
         if (curStaminaCooldown > 0)
         {
-            curStaminaCooldown -= Time.deltaTime;
+            curStaminaCooldown -= Time.deltaTime;   // reduces the cooldown per second
         }
 
         if (currentStamina < stamina && curStaminaCooldown <= 0)
         {
-            currentStamina += regenRate * Time.deltaTime;
+            currentStamina += regenRate * Time.deltaTime;   // regenerates stamina over time
         }
 
     }   
 
     void HealthStatus()
     {
-        if (health >= (maxHealth * 0.60))
+        if (health >= (maxHealth * 0.60))   // color of health if it is below 100 but above 60 percent
         {
             spiderHealth.color = Color.green;
         }
-        else if (health >= (maxHealth * 0.20))
+        else if (health >= (maxHealth * 0.20))  // color of health if it is below 60 but above 20 percent
         {
             spiderHealth.color = Color.yellow;
         }
         else
         {
-            spiderHealth.color = Color.red;
+            spiderHealth.color = Color.red; // color of health if it is below 20 percent
         }
     }
 
