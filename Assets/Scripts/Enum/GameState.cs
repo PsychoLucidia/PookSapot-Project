@@ -6,6 +6,7 @@ public enum GameState
 {
     Title,
     Menu,
+    CharSelect,
     Cutscene,
     InGame,
     GameOver,
