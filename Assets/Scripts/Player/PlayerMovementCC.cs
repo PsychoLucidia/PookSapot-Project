@@ -6,26 +6,13 @@ using UnityEngine;
 
 public class PlayerMovementCC : MonoBehaviour
 {
-    [Header("Movement")]
+    [Header("Movement Variables")]
     [SerializeField] float _horizonMove;
     [SerializeField] float _verticalMove;
     [SerializeField] float _gravity = -9.81f;
     [SerializeField] float _speed = 5f;
 
-    [Header("Components (Private)")]
-    [SerializeField] float _moveX;
-    [SerializeField] float _moveZ;
-    [SerializeField] Vector3 _playerMovement;
-    [SerializeField] Vector3 _vel;
-    [SerializeField] float _hitboxActiveDelay = 0.7f;
-    [SerializeField] bool _isGrounded = false;
-    [SerializeField] bool _isAttackCoroutineRunning = false;
-    Coroutine _attackCoroutine;
-
-    [Header("Spider Stat")]
-    public SpiderStat spiderStat;
-
-    [Header("Components (Public)")]
+    [Header("Components And Layers")]
     public FGroundFitter groundFitter;
     public Rigidbody rb;
     public GameObject playerHitbox;
@@ -34,24 +21,38 @@ public class PlayerMovementCC : MonoBehaviour
     public LayerMask layerMask;
     public float playerHeight = 2f;
     public bool isAttacking = false;
+
+    [Header("Sounds")]
     public AudioSource soundMove;
     public AudioSource soundAttack;
     public AudioSource soundDeath;
+
+    [Header("Spider Stat")]
+    public SpiderStat spiderStat;
 
     [Header("State Enums")]
     public CameraPos cameraPos;
     public ControlFlip controlFlip;
     public PlayerState playerState;
 
+    [Header("Private Variables")]
+    [SerializeField] float _moveX;
+    [SerializeField] float _moveZ;
+    [SerializeField] Vector3 _playerMovement;
+    [SerializeField] Vector3 _vel;
+    [SerializeField] float _hitboxActiveDelay = 0.7f;
+    [SerializeField] bool _isGrounded = false;
+    [SerializeField] bool _isAttackCoroutineRunning = false;
+    Coroutine _attackCoroutine;
     // Start is called before the first frame update
     void Start()
     {
+        spiderStat = this.gameObject.GetComponent<SpiderStat>();
         controller = this.gameObject.GetComponent<CharacterController>();
-        groundFitter = this.gameObject.GetComponent<FGroundFitter>();
         rb = this.gameObject.GetComponent<Rigidbody>();
+        groundFitter = this.gameObject.GetComponent<FGroundFitter>();
         lookAtPos = GameObject.Find("LookAt").transform;
         playerHitbox = this.gameObject.transform.Find("Hitbox").gameObject;
-        spiderStat = this.gameObject.GetComponent<SpiderStat>();
     }
 
     // Update is called once per frame

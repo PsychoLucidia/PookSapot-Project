@@ -5,11 +5,11 @@ using UnityEngine.UI;
 
 public class SpiderStat : MonoBehaviour
 {
-    [Header("Stats")]   // The set stats for the spiders
-    public int health;
+    [Header("Stats")]
     public int maxHealth = 100;
+    public int health;
+    public float stamina;
     public float currentStamina;
-    public float stamina = 60f;
     public int spiderDamage;
     public int spiderDefense;
 
@@ -23,11 +23,11 @@ public class SpiderStat : MonoBehaviour
     public float regenRate = 8f;
     public float staminaConsume = 15f;
 
-    public Image spiderHealth;
-
     [Header("Components (Private)")]
     [SerializeField] BattleUI battleUI;
 
+    [Header("Components (Public)")]
+    public Image spiderHealth;
     void Awake()
     {
         if (!isEnemy)
@@ -64,20 +64,36 @@ public class SpiderStat : MonoBehaviour
         curStaminaCooldown = staminaCooldown;   // sets the timer of stamina cooldown to 1 second before it starts regenrating
     }
 
+    /// <summary>
+    /// Applies damage to the player or AI.
+    /// <para>
+    /// If the player or AI is not in an invulnerable state, the health is reduced by the given amount minus half of the spider's defense.
+    /// The player or AI is then made invulnerable for 0.5 seconds and the health UI is shaken.
+    /// </para>
+    /// </summary>
+    /// <param name="damage">The amount of damage to apply.</param>
     public void TakeDamage(int damage)
     {
-        if (!isInvulnerable)    // determines if the player or AI is not in an invulnerable state
+        // Check if the player or AI is not in an invulnerable state
+        if (!isInvulnerable)
         {
-            health -= damage - (spiderDefense / 2); // the amount of health to be reduced when attacked
-            isInvulnerable = true;  // makes the player or AI invulnerable from attacks
-            Invoke("ResetInvulnerability", 0.5f);   // the player or AI will be invulnerable for 0.5 seconds
+            // Reduce the health of the player or AI by the given amount minus half of the spider's defense
+            health -= damage - (spiderDefense / 2);
 
+            // Make the player or AI invulnerable from attacks
+            isInvulnerable = true;
+
+            // Set a timer to make the player or AI invulnerable for 0.5 seconds
+            Invoke("ResetInvulnerability", 0.5f);
+
+            // If the player or AI is not an enemy, shake the health UI
             if (!isEnemy)
             {
-                battleUI.ShakeHealth(); // the UI of the spider's health does a shake animation
+                battleUI.ShakeHealth();
             }
         }
     }
+
 
     void StatClamp()
     {

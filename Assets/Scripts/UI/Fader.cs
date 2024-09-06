@@ -12,12 +12,6 @@ public class Fader : MonoBehaviour
 
     void Awake()
     {
-        faderCG = this.gameObject.GetComponent<CanvasGroup>();
-    }
-
-    // Start is called before the first frame update
-    void Start()
-    {
         if (instance == null)
         {
             instance = this;
@@ -26,6 +20,14 @@ public class Fader : MonoBehaviour
         {
             Destroy(gameObject);
         }
+
+        faderCG = this.gameObject.GetComponent<CanvasGroup>();
+    }
+
+    // Start is called before the first frame update
+    void Start()
+    {
+
     }
 
     void OnEnable()
@@ -36,8 +38,6 @@ public class Fader : MonoBehaviour
 
             _enabled = true;
         }
-
-
     }
 
     // Update is called once per frame

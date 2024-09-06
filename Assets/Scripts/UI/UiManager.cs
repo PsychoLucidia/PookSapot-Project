@@ -5,13 +5,15 @@ using UnityEngine;
 
 public class UiManager : MonoBehaviour
 {
+    [Header("Singleton")]
     public static UiManager instance;
 
+    [Header("Game Objects")]
     public GameObject[] gameObjects;
     public GameObject[] enableObject;
 
+    [Header("Fader")]
     public GameObject faderObj;
-
     void Awake()
     {
         if (instance == null)
