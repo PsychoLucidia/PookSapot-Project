@@ -454,7 +454,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_AspectMode: 0
-  m_AspectRatio: 1.7763162
+  m_AspectRatio: 1.7750003
 --- !u!114 &171584238
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5031,7 +5031,7 @@ AudioSource:
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: -8720507347795729626, guid: 4ae6a55f154cf834c98a7a44bed813d1, type: 2}
   m_audioClip: {fileID: 8300000, guid: 14bb8034f8badaa4a9a41b6532812b54, type: 3}
-  m_PlayOnAwake: 1
+  m_PlayOnAwake: 0
   m_Volume: 1
   m_Pitch: 1
   Loop: 0
