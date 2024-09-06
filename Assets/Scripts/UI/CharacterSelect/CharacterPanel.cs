@@ -19,6 +19,9 @@ public class CharacterPanel : MonoBehaviour
     public RectTransform backgroundTransform;
     public RectTransform characterPanelTransform;
 
+    [Header("Canvas Groups")]
+    public CanvasGroup buttonHighlightCanvasGroup;
+
     [Header("Button GameObjects")]
     public GameObject[] characterButtons;
 
@@ -29,6 +32,9 @@ public class CharacterPanel : MonoBehaviour
     [Header("Indexes")]
     public int currentSelIndex;
     public int previousSelIndex;
+
+    [Header("Bools")]
+    [SerializeField] bool _isCharacterSelected = false;
 
     [Header("Lists Init")]
     [SerializeField] List<RectTransform> buttonsTransforms = new List<RectTransform>();
@@ -42,6 +48,7 @@ public class CharacterPanel : MonoBehaviour
 
     [Header("Coroutines")]
     Coroutine characterBtnsCoroutine;
+    Coroutine characterSelectedCoroutine;
 
     void Awake()
     {
@@ -58,6 +65,8 @@ public class CharacterPanel : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        GameManager.instance.gameState = GameState.CharSelect;
+
         EnterCharacterSelect();
         Fader.instance.gameObject.SetActive(true);
         Fader.instance.faderCG.alpha = 1;
@@ -86,7 +95,7 @@ public class CharacterPanel : MonoBehaviour
     public void OnChangeIndex(int newIndex)
     {
         // If the new index is different from the current index, update the selected index and animate the character name and splash art
-        if (newIndex != currentSelIndex)
+        if (newIndex != currentSelIndex && !_isCharacterSelected)
         {
             // Store the previous selected index
             previousSelIndex = currentSelIndex;
@@ -105,6 +114,20 @@ public class CharacterPanel : MonoBehaviour
         }
     }
 
+    public void SelectCharacter()
+    {
+        if (!_isCharacterSelected)
+        {
+            GameManager.instance.playerInfo = fighterInfo[currentSelIndex];
+
+            int enemyRandomizer = Random.Range(0, fighterInfo.Length);
+            GameManager.instance.enemyInfo = fighterInfo[enemyRandomizer];
+
+            _isCharacterSelected = true;
+
+            characterSelectedCoroutine = StartCoroutine(OnCharacterSelected());
+        }
+    }
 
     /// <summary>
     /// Sets the character name and splash art sprites based on the current selected index.
@@ -160,10 +183,12 @@ public class CharacterPanel : MonoBehaviour
     {
         // Move the button highlight to the selected index
         buttonHighlightTransform.localPosition = buttonsTransforms[currentSelIndex].localPosition;
+        buttonHighlightCanvasGroup.alpha = 0;
 
         // Scale the button highlight to 1.1f and then scale it back to normal with a ease out circ animation
         buttonHighlightTransform.localScale = new Vector3(1.1f, 1.1f, 1f);
         LeanTween.scale(buttonHighlightTransform.gameObject, Vector3.one, 0.2f).setEaseOutCirc();
+        LeanTween.alphaCanvas(buttonHighlightCanvasGroup, 1f, 0.2f).setEaseOutCirc();
     }
 
     /// <summary>
@@ -262,6 +287,21 @@ public class CharacterPanel : MonoBehaviour
 
         AnimateCharacterNameAndSplashArt();
         MoveButtonHighlight();
+        yield break;
+    }
+
+    IEnumerator OnCharacterSelected()
+    {
+        LeanTween.cancel(buttonHighlightTransform.gameObject);
+
+        LeanTween.scale(buttonHighlightTransform.gameObject, new Vector3(3f, 3f, 1f), 0.5f).setEaseInCubic();
+        LeanTween.scale(buttonsTransforms[currentSelIndex], new Vector3(1.2f, 1.2f, 1f), 0.2f).setEaseOutCirc();
+        LeanTween.alphaCanvas(buttonHighlightCanvasGroup, 0f, 0.5f).setEaseInCubic();
+
+        yield return new WaitForSeconds(1f);
+
+        Fader.instance.gameObject.SetActive(true);
+        Fader.instance.FadeEnable(1, 0.5f, true, 3);
         yield break;
     }
 }

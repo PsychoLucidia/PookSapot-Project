@@ -102,7 +102,7 @@ public class BattleManager : MonoBehaviour
         yield return new WaitForSecondsRealtime(3f);
         GameManager.instance.gameState = GameState.Menu;
         Fader.instance.gameObject.SetActive(true);
-        Fader.instance.FadeEnable(1, 0.5f, true, 0);
+        Fader.instance.FadeEnable(1, 0.5f, true, 1);
         yield break;
     }
 
@@ -117,8 +117,8 @@ public class BattleManager : MonoBehaviour
         UiManager.instance.gameObjects[3].SetActive(true);
         yield return new WaitForSecondsRealtime(3f);
         GameManager.instance.gameState = GameState.Menu;
-        UiManager.instance.enableObject[1].SetActive(true);
-        Fader.instance.FadeEnable(1, 0.5f, true, 0);
+        Fader.instance.gameObject.SetActive(true);
+        Fader.instance.FadeEnable(1, 0.5f, true, 1);
         yield break;
     }
 }

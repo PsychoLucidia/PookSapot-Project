@@ -26,6 +26,10 @@ public class TitleTween : MonoBehaviour
     /// </summary>
     void Start()
     {
+        Fader.instance.gameObject.SetActive(true);
+        Fader.instance.faderCG.alpha = 1;
+        Fader.instance.FadeEnable(0, 1f, false, 0);
+
         // Initialize the transforms and canvas groups
         RootLogoAlphaTransformInit(new Vector3(1, 1, 1), 1f);
         PookTransformInit(new Vector2(0, -250), new Vector3(1, 0, 1));

@@ -1347,10 +1347,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 95cd38506c7388f47ba9f055b37aeb0a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  health: 0
   maxHealth: 150
-  currentStamina: 0
+  health: 0
   stamina: 100
+  currentStamina: 0
   spiderDamage: 30
   spiderDefense: 30
   isEnemy: 1
@@ -1359,8 +1359,8 @@ MonoBehaviour:
   curStaminaCooldown: 0
   regenRate: 10
   staminaConsume: 15
-  spiderHealth: {fileID: 0}
   battleUI: {fileID: 0}
+  spiderHealth: {fileID: 0}
 --- !u!114 &8204575171650142742
 MonoBehaviour:
   m_ObjectHideFlags: 0

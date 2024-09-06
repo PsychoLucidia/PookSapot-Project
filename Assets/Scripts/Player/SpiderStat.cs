@@ -38,13 +38,14 @@ public class SpiderStat : MonoBehaviour
 
             battleUI = battleUIRoot.GetComponent<BattleUI>();
         }
+
+        health = maxHealth;
+        currentStamina = stamina;
     }
 
     // Start is called before the first frame update
     void Start()
     {
-        health = maxHealth;
-        currentStamina = stamina;
     }
 
     // Update is called once per frame
@@ -121,7 +122,7 @@ public class SpiderStat : MonoBehaviour
         {
             spiderHealth.color = Color.green;
         }
-        else if (health >= (maxHealth * 0.20))  // color of health if it is below 60 but above 20 percent
+        else if (health >= (maxHealth * 0.25))  // color of health if it is below 60 but above 20 percent
         {
             spiderHealth.color = Color.yellow;
         }

@@ -46,16 +46,28 @@ public class Fader : MonoBehaviour
         
     }
 
+    /// <summary>
+    /// Fades the canvas group to the specified alpha value over the specified time.
+    /// If changeScene is true, the scene with the specified index will be loaded.
+    /// </summary>
+    /// <param name="alpha">The target alpha value of the canvas group.</param>
+    /// <param name="time">The time for the tweening effect.</param>
+    /// <param name="changeScene">Whether or not to change the scene.</param>
+    /// <param name="sceneIndex">The index of the scene to be loaded.</param>
     public void FadeEnable(float alpha, float time, bool changeScene, int sceneIndex)
     {
+        // Cancel any existing tween
         FadeCancelTween();
 
+        // Tween the alpha value of the canvas group
         LeanTween.alphaCanvas(faderCG, alpha, time).setEaseInOutCubic().setOnComplete( () => 
         {
+            // If we should change the scene, load the scene with the specified index
             if (changeScene)
             {
-                SceneManager.LoadSceneAsync(sceneIndex);
+                PookSceneManager.instance.LoadScene(sceneIndex);
             }
+            // Otherwise, simply disable this object
             else
             {
                 this.gameObject.SetActive(false);
@@ -66,7 +78,6 @@ public class Fader : MonoBehaviour
     public void GoToBattle(int sceneIndex)
     {
         faderCG.alpha = 0;
-        UiManager.instance.gameObjects[3].SetActive(true);
         FadeEnable(1, 0.5f, true, sceneIndex);
     }
 

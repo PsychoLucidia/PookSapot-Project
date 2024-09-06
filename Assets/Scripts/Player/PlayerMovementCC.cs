@@ -132,6 +132,12 @@ public class PlayerMovementCC : MonoBehaviour
             spiderStat.Attack();
             if (soundAttack != null) { soundAttack.Play(); }
         }
+
+        if (Input.GetKeyDown(KeyCode.Escape) && GameManager.instance.gameState == GameState.InGame)
+        {
+            Fader.instance.gameObject.SetActive(true);
+            Fader.instance.FadeEnable(1, 1f, true, 1);
+        }
     }
 
     void CurrentPlayerState()
