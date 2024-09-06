@@ -400,7 +400,7 @@ AnimatorState:
   m_MirrorParameterActive: 0
   m_CycleOffsetParameterActive: 0
   m_TimeParameterActive: 0
-  m_Motion: {fileID: 6720303635017113406, guid: 4e707e013ee72474caed90bf94f76afd, type: 3}
+  m_Motion: {fileID: 6720303635017113406, guid: 20cbe117de2a41047ad3787411b0393d, type: 3}
   m_Tag: 
   m_SpeedParameter: 
   m_MirrorParameter: 
@@ -511,7 +511,7 @@ AnimatorController:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: GagambotF
+  m_Name: GagambotF3
   serializedVersion: 5
   m_AnimatorParameters:
   - m_Name: Walk
@@ -1108,7 +1108,7 @@ AnimatorState:
   m_MirrorParameterActive: 0
   m_CycleOffsetParameterActive: 0
   m_TimeParameterActive: 0
-  m_Motion: {fileID: -3100369314251171874, guid: 4e707e013ee72474caed90bf94f76afd, type: 3}
+  m_Motion: {fileID: -3100369314251171874, guid: 20cbe117de2a41047ad3787411b0393d, type: 3}
   m_Tag: 
   m_SpeedParameter: 
   m_MirrorParameter: 
