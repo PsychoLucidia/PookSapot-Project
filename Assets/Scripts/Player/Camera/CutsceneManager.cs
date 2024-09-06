@@ -46,6 +46,10 @@ public class CutsceneManager : MonoBehaviour
 
     public void StartCutscene()
     {
+        Fader.instance.gameObject.SetActive(true);
+        Fader.instance.faderCG.alpha = 1;
+        Fader.instance.FadeEnable(0, 1f, false, 0);
+
         positionAt.position = new Vector3(0, 54.8f, 82.5f);
 
         LeanTween.moveSplineLocal(positionAt.gameObject, definedPathPoints[0].pathPoints, 5f).setEaseInOutCubic().setOnComplete(() => 

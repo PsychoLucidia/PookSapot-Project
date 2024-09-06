@@ -15,7 +15,7 @@ public class BattleUI : MonoBehaviour
     void Awake()
     {
         canvasGroup = this.gameObject.GetComponent<CanvasGroup>();
-        spiderStat = GameObject.Find("Player").GetComponent<SpiderStat>();
+        spiderStat = GameObject.Find("Player(Clone)").GetComponent<SpiderStat>();
 
         healthPosition = spiderHealth.transform.localPosition;
         canvasGroup.alpha = 0;

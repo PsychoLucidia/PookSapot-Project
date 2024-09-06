@@ -27,12 +27,13 @@ public class StaminaBar : MonoBehaviour
 
     void Awake()
     {
-        ComponentInit();
     }
 
     // Start is called before the first frame update
     void Start()
     {
+        ComponentInit();
+
         _runtimeUIOffset = uiOffset;
         _canvasGroup.alpha = 0f;
     }
@@ -53,7 +54,7 @@ public class StaminaBar : MonoBehaviour
     void ComponentInit()
     {
         // Get Components (objectPos)
-        Transform transRoot = GameObject.Find("Player").transform;
+        Transform transRoot = GameObject.Find("Player(Clone)").transform;
         Transform modelTransform = transRoot.transform.Find("Model");
         objectPos = modelTransform.transform.Find("StaminaPos");
 
@@ -70,9 +71,9 @@ public class StaminaBar : MonoBehaviour
         
         _cam = Camera.main;
 
-        _playerTransform = GameObject.Find("Player").transform;
+        _playerTransform = GameObject.Find("Player(Clone)").transform;
         
-        spiderStat = GameObject.Find("Player").GetComponent<SpiderStat>();
+        spiderStat = GameObject.Find("Player(Clone)").GetComponent<SpiderStat>();
     }
 
     void SetStaminaPosition(float value)    // sets the position of the stamina bar

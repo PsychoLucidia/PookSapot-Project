@@ -130,7 +130,7 @@ public class PlayerMovementCC : MonoBehaviour
             _attackCoroutine = StartCoroutine(Attack());
             _isAttackCoroutineRunning = true;
             spiderStat.Attack();
-            soundAttack.Play();
+            if (soundAttack != null) { soundAttack.Play(); }
         }
     }
 
@@ -197,9 +197,11 @@ public class PlayerMovementCC : MonoBehaviour
             rb.AddForce(Vector3.up * 10, ForceMode.Impulse);
             GameManager.instance.gameState = GameState.GameOver;
             playerState = PlayerState.Dead;
-            soundDeath.Play();
+
+            if (soundDeath != null) { soundDeath.Play(); }
 
             BattleManager.instance.GameOver();
+            Debug.Log("Player Defeated");
         }
     }
     

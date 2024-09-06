@@ -17,11 +17,12 @@ public class CameraController : MonoBehaviour
     {
         Transform rootObject = this.gameObject.transform;
 
-        player = GameObject.Find("Player").transform;
+        player = GameObject.Find("Player(Clone)").transform;
         lookAtPos = GameObject.Find("LookAt").transform;
         vcam = rootObject.transform.Find("VCAMGAMEPLAY").GetComponent<CinemachineVirtualCamera>();
 
         transposer = vcam.GetCinemachineComponent<CinemachineTransposer>();
+        vcam.Follow = player;
     }
 
     // Update is called once per frame

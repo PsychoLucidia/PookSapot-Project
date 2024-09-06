@@ -836,14 +836,6 @@ MonoBehaviour:
   _verticalMove: 0
   _gravity: -9.81
   _speed: 6
-  _moveX: 0
-  _moveZ: 0
-  _playerMovement: {x: 0, y: 0, z: 0}
-  _vel: {x: 0, y: 0, z: 0}
-  _hitboxActiveDelay: 0.12
-  _isGrounded: 0
-  _isAttackCoroutineRunning: 0
-  spiderStat: {fileID: 0}
   groundFitter: {fileID: 0}
   rb: {fileID: 0}
   playerHitbox: {fileID: 0}
@@ -857,9 +849,17 @@ MonoBehaviour:
   soundMove: {fileID: 0}
   soundAttack: {fileID: 0}
   soundDeath: {fileID: 0}
+  spiderStat: {fileID: 0}
   cameraPos: 0
   controlFlip: 0
   playerState: 0
+  _moveX: 0
+  _moveZ: 0
+  _playerMovement: {x: 0, y: 0, z: 0}
+  _vel: {x: 0, y: 0, z: 0}
+  _hitboxActiveDelay: 0.12
+  _isGrounded: 0
+  _isAttackCoroutineRunning: 0
 --- !u!143 &8162957479486793016
 CharacterController:
   m_ObjectHideFlags: 0
@@ -916,20 +916,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 95cd38506c7388f47ba9f055b37aeb0a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  health: 0
   maxHealth: 100
-  currentStamina: 0
+  health: 0
   stamina: 100
+  currentStamina: 0
   spiderDamage: 35
   spiderDefense: 30
-  isEnemy: 1
+  isEnemy: 0
   isInvulnerable: 0
   staminaCooldown: 1
   curStaminaCooldown: 0
   regenRate: 10
   staminaConsume: 15
-  spiderHealth: {fileID: 0}
   battleUI: {fileID: 0}
+  spiderHealth: {fileID: 0}
 --- !u!114 &802228506780480824
 MonoBehaviour:
   m_ObjectHideFlags: 0

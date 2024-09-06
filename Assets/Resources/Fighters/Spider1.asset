@@ -14,4 +14,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   characterName: {fileID: 21300000, guid: f107d6593f8bf7341bfb0038f0f91178, type: 3}
   characterSplashArt: {fileID: 21300000, guid: 666e83baadca7bf4988bf229e2d78034, type: 3}
-  objectPrefab: {fileID: 0}
+  objectPrefab: {fileID: 2186955914301036933, guid: 91873f0b931f20542a10ad128b79ed05, type: 3}
+  objectPrefabEnemy: {fileID: 4471843610439227203, guid: c4adbbec8f8327a4c91d79ed02926605, type: 3}

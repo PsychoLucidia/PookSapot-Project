@@ -13,7 +13,7 @@ public class GameManager : MonoBehaviour
     public FighterInfo enemyInfo;
 
     // Start is called before the first frame update
-    void Start()
+    void Awake()
     {   
         if (instance == null)
         {

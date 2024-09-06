@@ -14,12 +14,12 @@ public class CameraLookAt : MonoBehaviour
     {
         if (playerObj == null)
         {
-            playerObj = GameObject.Find("Player").transform;
+            playerObj = GameObject.Find("Player(Clone)").transform;
         }
 
         if (enemyObj == null)
         {
-            enemyObj = GameObject.Find("Enemy").transform;
+            enemyObj = GameObject.Find("Enemy(Clone)").transform;
         }
     }
 

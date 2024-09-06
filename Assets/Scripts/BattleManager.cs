@@ -6,6 +6,12 @@ public class BattleManager : MonoBehaviour
 {
     public static BattleManager instance;
 
+    public Transform playerTransform;
+    public Transform enemyTransform;
+
+    public GameObject playerObject;
+    public GameObject enemyObject;
+
     public PlayerMovementCC playerMovementCC;
     public EnemyManager enemyManager;
 
@@ -14,21 +20,36 @@ public class BattleManager : MonoBehaviour
 
     void Awake()
     {
-        playerMovementCC = GameObject.Find("Player").GetComponent<PlayerMovementCC>();
-        enemyManager = GameObject.Find("Enemy").GetComponent<EnemyManager>();
-    }
-
-    // Start is called before the first frame update
-    void Start()
-    {
         if (instance == null)
         {
             instance = this;
+            Debug.Log("BattleManager singleton created");
         }
         else
         {
             Destroy(gameObject);
         }
+
+        playerObject = GameManager.instance.playerInfo.objectPrefab;
+        enemyObject = GameManager.instance.enemyInfo.objectPrefabEnemy;
+
+        playerObject.name = "Player";
+        enemyObject.name = "Enemy";
+    }
+
+    // Start is called before the first frame update
+    void Start()
+    {
+        InstantiatePlayers();
+    }
+
+    void InstantiatePlayers()
+    {
+        Instantiate(playerObject, playerTransform.position, playerTransform.rotation);
+        playerMovementCC = GameObject.Find("Player(Clone)").transform.GetComponent<PlayerMovementCC>();
+
+        Instantiate(enemyObject, enemyTransform.position, enemyTransform.rotation);
+        enemyManager = GameObject.Find("Enemy(Clone)").transform.GetComponent<EnemyManager>();
     }
 
     // Update is called once per frame
@@ -47,6 +68,10 @@ public class BattleManager : MonoBehaviour
 
     public void GameOver()
     {
+        Debug.Log("GameManager.instance.gameState: " + GameManager.instance.gameState);
+        Debug.Log("playerMovementCC.playerState: " + playerMovementCC.playerState);
+        Debug.Log("enemyManager.state: " + enemyManager.state);
+
         if (!isGameOver && playerMovementCC.playerState == PlayerState.Dead && GameManager.instance.gameState == GameState.GameOver)
         {
             Debug.Log("Player Loses");
@@ -58,6 +83,10 @@ public class BattleManager : MonoBehaviour
             Debug.Log("Player Wins");
             isGameOver = true;
             StartCoroutine(PlayerWin());
+        }
+        else
+        {
+            Debug.Log("Game Over - No one died");
         }
     }
 
@@ -72,7 +101,7 @@ public class BattleManager : MonoBehaviour
         UiManager.instance.gameObjects[2].SetActive(true);
         yield return new WaitForSecondsRealtime(3f);
         GameManager.instance.gameState = GameState.Menu;
-        UiManager.instance.enableObject[1].SetActive(true);
+        Fader.instance.gameObject.SetActive(true);
         Fader.instance.FadeEnable(1, 0.5f, true, 0);
         yield break;
     }

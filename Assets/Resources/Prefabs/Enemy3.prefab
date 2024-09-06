@@ -1667,10 +1667,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 95cd38506c7388f47ba9f055b37aeb0a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  health: 0
   maxHealth: 180
-  currentStamina: 0
+  health: 0
   stamina: 100
+  currentStamina: 0
   spiderDamage: 35
   spiderDefense: 30
   isEnemy: 1
@@ -1679,8 +1679,8 @@ MonoBehaviour:
   curStaminaCooldown: 0
   regenRate: 10
   staminaConsume: 13
-  spiderHealth: {fileID: 0}
   battleUI: {fileID: 0}
+  spiderHealth: {fileID: 0}
 --- !u!114 &8204575171650142742
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1888,7 +1888,7 @@ Animator:
   m_GameObject: {fileID: 4755497935861858373}
   m_Enabled: 1
   m_Avatar: {fileID: 9000000, guid: 20cbe117de2a41047ad3787411b0393d, type: 3}
-  m_Controller: {fileID: 9100000, guid: 107ead727d25524458890f2047815910, type: 2}
+  m_Controller: {fileID: 9100000, guid: c6fe2c8fec0cc71449aa92617fe6be95, type: 2}
   m_CullingMode: 1
   m_UpdateMode: 0
   m_ApplyRootMotion: 0

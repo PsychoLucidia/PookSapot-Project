@@ -69,7 +69,7 @@ public class EnemyManager : MonoBehaviour
         rb = this.gameObject.GetComponent<Rigidbody>();
         groundFitter = this.gameObject.GetComponent<FGroundFitter>();
         enemyHitbox = this.gameObject.transform.Find("Hitbox").gameObject;
-        _playerTransform = GameObject.Find("Player").transform;
+        _playerTransform = GameObject.Find("Player(Clone)").transform;
     }
 
     // Start is called before the first frame update
@@ -300,6 +300,7 @@ public class EnemyManager : MonoBehaviour
             state = EnemyState.Dead;
 
             BattleManager.instance.GameOver();
+            Debug.Log("Enemy Defeated");
         }
     }
 

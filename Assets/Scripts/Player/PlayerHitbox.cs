@@ -22,8 +22,8 @@ public class PlayerHitbox : MonoBehaviour
     /// </summary>
     void Awake()
     {
-        if (!isEnemy) { spiderStat = GameObject.Find("Player").GetComponent<SpiderStat>(); }
-        else { spiderStat = GameObject.Find("Enemy").GetComponent<SpiderStat>(); }
+        if (!isEnemy) { spiderStat = GameObject.Find("Player(Clone)").GetComponent<SpiderStat>(); }
+        else { spiderStat = GameObject.Find("Enemy(Clone)").GetComponent<SpiderStat>(); }
 
         this.gameObject.SetActive(false);
     }

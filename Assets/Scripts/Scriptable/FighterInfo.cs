@@ -8,4 +8,5 @@ public class FighterInfo : ScriptableObject
     public Sprite characterName;
     public Sprite characterSplashArt;
     public GameObject objectPrefab;
+    public GameObject objectPrefabEnemy;
 }
