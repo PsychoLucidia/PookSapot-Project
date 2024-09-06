@@ -67,31 +67,39 @@ public class CharacterPanel : MonoBehaviour
 
     public void OnChangeIndex(int index)
     {
-        previousSelIndex = currentSelIndex;
-        currentSelIndex = index;
+        if (index != currentSelIndex)
+        {
+            previousSelIndex = currentSelIndex;
+            currentSelIndex = index;
 
-        characterName.sprite = fighterInfo[currentSelIndex].characterName;
-        splashArtImage.sprite = fighterInfo[currentSelIndex].characterSplashArt;
+            characterName.sprite = fighterInfo[currentSelIndex].characterName;
+            splashArtImage.sprite = fighterInfo[currentSelIndex].characterSplashArt;
 
-        splashArtPos.anchoredPosition = new Vector2(charSplashPositionInit.x - 1000, charSplashPositionInit.y);
-        characterNamePos.anchoredPosition = new Vector2(charNamePositionInit.x -20, charNamePositionInit.y - 30);
-        characterNamePos.localScale = new Vector3(0f, 0f, 1);
+            splashArtPos.anchoredPosition = new Vector2(charSplashPositionInit.x - 1000, charSplashPositionInit.y);
+            characterNamePos.anchoredPosition = new Vector2(charNamePositionInit.x -20, charNamePositionInit.y - 30);
+            characterNamePos.localScale = new Vector3(0f, 0f, 1);
 
-        LeanTween.cancel(splashArtPos.gameObject);
-        LeanTween.cancel(buttonHighlightTransform.gameObject);
-        LeanTween.cancel(characterNamePos.gameObject);
-        
-        LeanTween.move(splashArtPos, new Vector2(charSplashPositionInit.x - 20, charSplashPositionInit.y), 0.1f).setOnComplete(() => {
-            LeanTween.move(splashArtPos, charSplashPositionInit, 1f).setEaseOutCirc();
-        });
-        LeanTween.moveLocal(buttonHighlightTransform.gameObject, buttonsTransforms[currentSelIndex].localPosition, 0.1f).setEaseInOutBounce();
-
-        LeanTween.move(characterNamePos, new Vector2(charNamePositionInit.x, charNamePositionInit.y), 1.1f).setEaseOutCirc();
-        LeanTween.scale(characterNamePos.gameObject, new Vector3(1.1f, 1.1f, 1f), 0.05f).setEaseOutCirc().setOnComplete(() => {
-            LeanTween.scale(characterNamePos.gameObject, new Vector3(0.9f, 0.9f, 1f), 0.05f).setEaseInCirc().setOnComplete(() => {
-                LeanTween.scale(characterNamePos.gameObject, new Vector3(1f, 1f, 1f), 1f).setEaseOutCirc();
+            LeanTween.cancel(splashArtPos.gameObject);
+            LeanTween.cancel(buttonHighlightTransform.gameObject);
+            LeanTween.cancel(characterNamePos.gameObject);
+            
+            LeanTween.move(splashArtPos, new Vector2(charSplashPositionInit.x - 20, charSplashPositionInit.y), 0.1f).setOnComplete(() => {
+                LeanTween.move(splashArtPos, charSplashPositionInit, 1f).setEaseOutCirc();
             });
-        });
+
+            buttonHighlightTransform.localPosition = buttonsTransforms[currentSelIndex].localPosition;
+
+            buttonHighlightTransform.localScale = new Vector3(1.1f, 1.1f, 1f);
+            LeanTween.scale(buttonHighlightTransform.gameObject, new Vector3(1f, 1f, 1f), 0.2f).setEaseOutCirc();
+            // LeanTween.moveLocal(buttonHighlightTransform.gameObject, buttonsTransforms[currentSelIndex].localPosition, 0.1f).setEaseInOutBounce();
+
+            LeanTween.move(characterNamePos, new Vector2(charNamePositionInit.x, charNamePositionInit.y), 1.1f).setEaseOutCirc();
+            LeanTween.scale(characterNamePos.gameObject, new Vector3(1.1f, 1.1f, 1f), 0.05f).setEaseOutCirc().setOnComplete(() => {
+                LeanTween.scale(characterNamePos.gameObject, new Vector3(0.9f, 0.9f, 1f), 0.05f).setEaseInCirc().setOnComplete(() => {
+                    LeanTween.scale(characterNamePos.gameObject, new Vector3(1f, 1f, 1f), 1f).setEaseOutCirc();
+                });
+            });
+        }
     }
 
     void Initalization()

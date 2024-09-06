@@ -34,8 +34,6 @@ public class Fader : MonoBehaviour
         {
             FadeCancelTween();
 
-            faderCG.alpha = 1;
-            FadeEnable(0, 0.5f, false, 0);
             _enabled = true;
         }
 

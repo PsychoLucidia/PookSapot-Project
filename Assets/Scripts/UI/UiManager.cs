@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 using UnityEngine;
 
 public class UiManager : MonoBehaviour
@@ -8,6 +9,8 @@ public class UiManager : MonoBehaviour
 
     public GameObject[] gameObjects;
     public GameObject[] enableObject;
+
+    public GameObject faderObj;
 
     void Awake()
     {
@@ -24,10 +27,14 @@ public class UiManager : MonoBehaviour
         {
             obj.SetActive(false);
         }
+
+        faderObj.SetActive(false);
     }
 
     void Start()
     {
+        faderObj.SetActive(true);
+
 
         foreach (GameObject obj in enableObject)
         {

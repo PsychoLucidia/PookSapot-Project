@@ -9,6 +9,9 @@ public class GameManager : MonoBehaviour
     public GameState gameState; // references the GameState script to determine the state of the game scene
     public PauseState pauseState;   // references the PauseState script to determine the status if the game is paused, unpaused, or is in slow motion
 
+    public FighterInfo playerInfo;
+    public FighterInfo enemyInfo;
+
     // Start is called before the first frame update
     void Start()
     {   
