@@ -32,6 +32,8 @@ public class CharacterPanel : MonoBehaviour
     [Header("Public Components")]
     public Image characterName;
     public Image splashArtImage;
+    public Image enemyCharName;
+    public Image enemysplashArtImage;
 
     [Header("Indexes")]
     public int currentSelIndex;
@@ -128,6 +130,8 @@ public class CharacterPanel : MonoBehaviour
 
             int enemyRandomizer = Random.Range(0, fighterInfo.Length);
             GameManager.instance.enemyInfo = fighterInfo[enemyRandomizer];
+            SetEnemyCharacterNameSplashArt(enemyRandomizer);
+            AnimateEnemyCharacterNameSplashArt();
 
             _isCharacterSelected = true;
 
@@ -182,9 +186,39 @@ public class CharacterPanel : MonoBehaviour
         });
     }
 
+    void SetEnemyCharacterNameSplashArt(int randomEnemySelect)
+    {
+        enemyCharName.sprite = fighterInfo[randomEnemySelect].characterName;
+        enemysplashArtImage.sprite = fighterInfo[randomEnemySelect].characterSplashArt;
+    }
+
     void AnimateEnemyCharacterNameSplashArt()
     {
+        UiManager.instance.gameObjects[3].SetActive(true);
+        UiManager.instance.gameObjects[4].SetActive(true);
 
+        enemyCharNameTransform.anchoredPosition = enemyNamePositionInit + new Vector2(20, -30);
+        enemysplashArtTransform.anchoredPosition = enemySplashPositionInit + new Vector2(1000, 0);
+        enemyCharNameTransform.localScale = Vector3.zero;
+
+        LeanTween.cancel(enemyCharNameTransform.gameObject);
+        LeanTween.cancel(enemysplashArtTransform.gameObject);
+
+        LeanTween.move(enemysplashArtTransform, enemySplashPositionInit + new Vector2(20, 0), 0.1f)
+        .setOnComplete(() => LeanTween.move(enemysplashArtTransform, enemySplashPositionInit, 1f).setEaseOutCirc());
+
+        LeanTween.move(enemyCharNameTransform, enemyNamePositionInit, 1.1f).setEaseOutCirc();
+        LeanTween.scale(enemyCharNameTransform.gameObject, new Vector3(1.1f, 1.1f, 1f), 0.05f)
+        .setEaseOutCirc()
+        .setOnComplete(() =>
+        {
+            LeanTween.scale(enemyCharNameTransform.gameObject, new Vector3(0.9f, 0.9f, 1f), 0.05f)
+            .setEaseInCirc()
+            .setOnComplete(() =>
+            {
+                LeanTween.scale(enemyCharNameTransform.gameObject, Vector3.one, 1f).setEaseOutCirc();
+            });
+        });
     }
 
     /// <summary>
@@ -219,7 +253,7 @@ public class CharacterPanel : MonoBehaviour
         enemyNamePositionInit = enemyCharNameTransform.anchoredPosition;
 
         // Save the initial position of the enemy splash art
-        enemySplashPositionInit = splashArtTransform.anchoredPosition;  
+        enemySplashPositionInit = enemysplashArtTransform.anchoredPosition;  
 
         // Save the initial position of the lightning
         lightningPositionInit = lightningTransform.anchoredPosition;
@@ -315,7 +349,7 @@ public class CharacterPanel : MonoBehaviour
         LeanTween.scale(buttonsTransforms[currentSelIndex], new Vector3(1.2f, 1.2f, 1f), 0.2f).setEaseOutCirc();
         LeanTween.alphaCanvas(buttonHighlightCanvasGroup, 0f, 0.5f).setEaseInCubic();
 
-        yield return new WaitForSeconds(1f);
+        yield return new WaitForSeconds(2f);
 
         Fader.instance.gameObject.SetActive(true);
         Fader.instance.FadeEnable(1, 0.5f, true, 3);

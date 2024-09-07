@@ -6,7 +6,10 @@ using UnityEngine;
 public class CameraController : MonoBehaviour
 {
     public CinemachineVirtualCamera vcam;
+    public CinemachineVirtualCamera playerDeadCam;
+    public CinemachineVirtualCamera enemyDeadCam;
     public Transform player;
+    public Transform enemy;
     public Transform lookAtPos;
     CinemachineTransposer transposer;
 
@@ -18,11 +21,15 @@ public class CameraController : MonoBehaviour
         Transform rootObject = this.gameObject.transform;
 
         player = GameObject.Find("Player(Clone)").transform;
+        enemy = GameObject.Find("Enemy(Clone)").transform;
         lookAtPos = GameObject.Find("LookAt").transform;
-        vcam = rootObject.transform.Find("VCAMGAMEPLAY").GetComponent<CinemachineVirtualCamera>();
 
         transposer = vcam.GetCinemachineComponent<CinemachineTransposer>();
         vcam.Follow = player;
+        playerDeadCam.LookAt = player;
+        
+        enemyDeadCam.Follow = player;
+        enemyDeadCam.LookAt = enemy;
     }
 
     // Update is called once per frame

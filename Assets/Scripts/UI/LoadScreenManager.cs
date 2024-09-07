@@ -29,18 +29,22 @@ public class LoadScreenManager : MonoBehaviour
             Destroy(this);
         }
 
-        loadTextInitPos = loadText.localPosition;
+        loadTextInitPos = loadText.anchoredPosition;
         loadBarInitPos = loadBar.anchoredPosition;
 
         loadScreenObj.SetActive(false);
     }
 
-    void OnEnable()
+    public void AnimateFade()
     {
         loadTextCanvasGroup.alpha = 0;
         loadBarCanvasGroup.alpha = 0;
+        loadScreenCanvasGroup.alpha = 0;
+        loadText.anchoredPosition = new Vector2(loadTextInitPos.x - 20f, loadTextInitPos.y);
 
         LeanTween.alphaCanvas(loadTextCanvasGroup, 1, 0.5f).setEaseOutCubic();
         LeanTween.alphaCanvas(loadBarCanvasGroup, 1, 0.5f).setEaseOutCubic();
+        LeanTween.alphaCanvas(loadScreenCanvasGroup, 1, 0.5f).setEaseOutCubic();
+        LeanTween.move(loadText, new Vector2(loadTextInitPos.x, loadTextInitPos.y), 0.5f).setEaseOutCubic();
     }
 }

@@ -1287,7 +1287,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 0}
   m_AnchorMax: {x: 1, y: 0}
-  m_AnchoredPosition: {x: -530.9, y: 101.3}
+  m_AnchoredPosition: {x: -530.9, y: 132.7}
   m_SizeDelta: {x: 126, y: 90}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &566101729
@@ -2203,7 +2203,7 @@ Transform:
   m_GameObject: {fileID: 881939898}
   serializedVersion: 2
   m_LocalRotation: {x: 0.09668221, y: -0.70689404, z: 0.01935078, w: 0.70041347}
-  m_LocalPosition: {x: 27.990105, y: 9.772033, z: 78.86971}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -2743,8 +2743,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1023351572}
   serializedVersion: 2
-  m_LocalRotation: {x: -0.000026071602, y: 0.00015953211, z: 0.000017568786, w: 1}
-  m_LocalPosition: {x: 0.00005378119, y: 0.000009022715, z: -0.000022039712}
+  m_LocalRotation: {x: 0.000006596014, y: -0.00009094794, z: -0.000010015175, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -3250,7 +3250,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1230078804}
   serializedVersion: 2
-  m_LocalRotation: {x: -0.0925213, y: -0.70698565, z: 0.0152523, w: -0.700984}
+  m_LocalRotation: {x: -0.09257522, y: -0.7069815, z: 0.015288003, w: -0.7009803}
   m_LocalPosition: {x: -34.9905, y: 5.3587875, z: 78.38147}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -3698,8 +3698,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1626972083}
   serializedVersion: 2
-  m_LocalRotation: {x: -0.0000033567442, y: 0.99849725, z: 0.05480196, w: 0.000061160186}
-  m_LocalPosition: {x: 0.000028507471, y: 1.4853954, z: 77.31991}
+  m_LocalRotation: {x: 0.0000019145386, y: 0.9984966, z: 0.05481478, w: -0.000034874894}
+  m_LocalPosition: {x: -0.001124609, y: 1.4854836, z: 77.319916}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -3721,8 +3721,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3ceb0256163a90c4ebc60421badecbd0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  vcam: {fileID: 0}
+  vcam: {fileID: 1230078806}
+  playerDeadCam: {fileID: 881939900}
+  enemyDeadCam: {fileID: 257772892}
   player: {fileID: 0}
+  enemy: {fileID: 0}
   lookAtPos: {fileID: 0}
   camDistance: 10
 --- !u!114 &1626972088
@@ -5040,7 +5043,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 0}
   m_AnchorMax: {x: 1, y: 0}
-  m_AnchoredPosition: {x: -404.09998, y: 106.20999}
+  m_AnchoredPosition: {x: -404.09998, y: 133.8}
   m_SizeDelta: {x: 73.74597, y: 99.823}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1904602970

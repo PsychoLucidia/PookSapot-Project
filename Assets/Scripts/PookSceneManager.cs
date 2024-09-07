@@ -27,11 +27,12 @@ public class PookSceneManager : MonoBehaviour
 
     IEnumerator LoadSceneIEnum(int sceneIndex)
     {
-        yield return new WaitForSecondsRealtime(0.5f);
-        AsyncOperation asyncLoad = SceneManager.LoadSceneAsync(sceneIndex);
-
-        asyncLoad.allowSceneActivation = false;
         LoadScreenManager.instance.loadScreenObj.SetActive(true);
+        LoadScreenManager.instance.AnimateFade();
+        yield return new WaitForSecondsRealtime(0.5f);
+
+        AsyncOperation asyncLoad = SceneManager.LoadSceneAsync(sceneIndex);
+        asyncLoad.allowSceneActivation = false;
 
         while (asyncLoad.progress < 0.9f)
         {
