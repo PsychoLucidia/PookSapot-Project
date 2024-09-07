@@ -24,7 +24,7 @@ public class PlayerMovementCC : MonoBehaviour
 
     [Header("Sounds")]
     public AudioSource soundMove;
-    public AudioSource soundAttack;
+    public AudioSource[] soundAttack;
     public AudioSource soundDeath;
 
     [Header("Spider Stat")]
@@ -130,7 +130,7 @@ public class PlayerMovementCC : MonoBehaviour
             _attackCoroutine = StartCoroutine(Attack());
             _isAttackCoroutineRunning = true;
             spiderStat.Attack();
-            if (soundAttack != null) { soundAttack.Play(); }
+            if (soundAttack != null) { soundAttack[Random.Range(0, soundAttack.Length)].Play(); }
         }
 
         if (Input.GetKeyDown(KeyCode.Escape) && GameManager.instance.gameState == GameState.InGame)

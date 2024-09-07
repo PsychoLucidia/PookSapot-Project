@@ -20,14 +20,15 @@ public class SettingsManager : MonoBehaviour
         {
             instance = this;
             DontDestroyOnLoad(gameObject);
+
+            LoadMixer();
+            LoadSettings();
         }
         else
         {
             Destroy(gameObject);
         }
 
-        LoadMixer();
-        LoadSettings();
     }
 
     // Update is called once per frame
@@ -57,6 +58,10 @@ public class SettingsManager : MonoBehaviour
         musicVolume = PlayerPrefs.GetFloat("MusicVolume", 0.8f);
         sfxVolume = PlayerPrefs.GetFloat("SFXVolume", 0.8f);
         Debug.Log("Settings loaded. Music volume: " + musicVolume + " SFX volume: " + sfxVolume);
+
+        masterMixer.SetFloat("MusicParam", Mathf.Lerp(-80, 0, musicVolume));
+        masterMixer.SetFloat("SoundParam", Mathf.Lerp(-80, 0, musicVolume));
+
     }
 
     void LoadMixer()

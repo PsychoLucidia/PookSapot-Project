@@ -819,6 +819,53 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &337434840
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 337434842}
+  - component: {fileID: 337434841}
+  m_Layer: 0
+  m_Name: GameSettingsManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &337434841
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 337434840}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 45c69f6157e4f8c4f9e7cde2aff8818f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  masterMixer: {fileID: 0}
+  musicVolume: 0.8
+  sfxVolume: 0.8
+--- !u!4 &337434842
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 337434840}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 1098.8292, y: 81.14162, z: -3.092109}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!224 &405526851 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 242914344269620927, guid: 7ee7d9eefebb3464b81b354d57e0c510, type: 3}
@@ -1028,7 +1075,7 @@ AudioSource:
   m_GameObject: {fileID: 490603582}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
+  OutputAudioMixerGroup: {fileID: -6474576047615225209, guid: 4ae6a55f154cf834c98a7a44bed813d1, type: 2}
   m_audioClip: {fileID: 8300000, guid: 443b3a908697c43429cff5d5a86849b5, type: 3}
   m_PlayOnAwake: 1
   m_Volume: 0.515
@@ -4201,7 +4248,7 @@ AudioSource:
   m_GameObject: {fileID: 1738372090}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
+  OutputAudioMixerGroup: {fileID: -8720507347795729626, guid: 4ae6a55f154cf834c98a7a44bed813d1, type: 2}
   m_audioClip: {fileID: 8300000, guid: 8a2138e8920b9934ea6d7f4717100124, type: 3}
   m_PlayOnAwake: 1
   m_Volume: 0.406
@@ -5980,3 +6027,4 @@ SceneRoots:
   - {fileID: 18094781}
   - {fileID: 2029293724}
   - {fileID: 111925524}
+  - {fileID: 337434842}
