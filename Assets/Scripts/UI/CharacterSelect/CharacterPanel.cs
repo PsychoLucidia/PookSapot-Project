@@ -19,6 +19,10 @@ public class CharacterPanel : MonoBehaviour
     public RectTransform backgroundTransform;
     public RectTransform characterPanelTransform;
 
+    [Header("Enemy Transforms")]
+    public RectTransform enemyCharNameTransform;
+    public RectTransform enemysplashArtTransform;
+
     [Header("Canvas Groups")]
     public CanvasGroup buttonHighlightCanvasGroup;
 
@@ -42,6 +46,8 @@ public class CharacterPanel : MonoBehaviour
     [Header("Positions Init")]
     [SerializeField] Vector2 charNamePositionInit;
     [SerializeField] Vector2 charSplashPositionInit;
+    [SerializeField] Vector2 enemyNamePositionInit;
+    [SerializeField] Vector2 enemySplashPositionInit;
     [SerializeField] Vector2 lightningPositionInit;
     [SerializeField] List<Vector2> buttonPositions = new List<Vector2>();
     [SerializeField] List<CanvasGroup> buttonsCanvasGroup = new List<CanvasGroup>();
@@ -176,6 +182,11 @@ public class CharacterPanel : MonoBehaviour
         });
     }
 
+    void AnimateEnemyCharacterNameSplashArt()
+    {
+
+    }
+
     /// <summary>
     /// Move the button highlight to the selected index.
     /// </summary>
@@ -203,6 +214,12 @@ public class CharacterPanel : MonoBehaviour
 
         // Save the initial position of the splash art
         charSplashPositionInit = splashArtTransform.anchoredPosition;
+
+        // Save the initial position of the enemy character name
+        enemyNamePositionInit = enemyCharNameTransform.anchoredPosition;
+
+        // Save the initial position of the enemy splash art
+        enemySplashPositionInit = splashArtTransform.anchoredPosition;  
 
         // Save the initial position of the lightning
         lightningPositionInit = lightningTransform.anchoredPosition;
