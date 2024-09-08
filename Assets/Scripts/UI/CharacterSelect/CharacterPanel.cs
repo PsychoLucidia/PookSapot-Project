@@ -9,7 +9,7 @@ public class CharacterPanel : MonoBehaviour
     public FighterInfo[] fighterInfo;
 
     [Header("Parent Object")]
-    [SerializeField] GameObject characterParentObj;
+    [SerializeField] GameObject _characterParentObj;
 
     [Header("Transforms")]
     public RectTransform buttonHighlightTransform;
@@ -43,28 +43,28 @@ public class CharacterPanel : MonoBehaviour
     [SerializeField] bool _isCharacterSelected = false;
 
     [Header("Lists Init")]
-    [SerializeField] List<RectTransform> buttonsTransforms = new List<RectTransform>();
+    [SerializeField] List<RectTransform> _buttonsTransforms = new List<RectTransform>();
 
     [Header("Positions Init")]
-    [SerializeField] Vector2 charNamePositionInit;
-    [SerializeField] Vector2 charSplashPositionInit;
-    [SerializeField] Vector2 enemyNamePositionInit;
-    [SerializeField] Vector2 enemySplashPositionInit;
-    [SerializeField] Vector2 lightningPositionInit;
-    [SerializeField] List<Vector2> buttonPositions = new List<Vector2>();
-    [SerializeField] List<CanvasGroup> buttonsCanvasGroup = new List<CanvasGroup>();
+    [SerializeField] Vector2 _charNamePositionInit;
+    [SerializeField] Vector2 _charSplashPositionInit;
+    [SerializeField] Vector2 _enemyNamePositionInit;
+    [SerializeField] Vector2 _enemySplashPositionInit;
+    [SerializeField] Vector2 _lightningPositionInit;
+    [SerializeField] List<Vector2> _buttonPositions = new List<Vector2>();
+    [SerializeField] List<CanvasGroup> _buttonsCanvasGroup = new List<CanvasGroup>();
 
     [Header("Coroutines")]
-    Coroutine characterBtnsCoroutine;
-    Coroutine characterSelectedCoroutine;
+    Coroutine _characterBtnsCoroutine;
+    Coroutine _characterSelectedCoroutine;
 
     void Awake()
     {
-        characterButtons = new GameObject[characterParentObj.transform.childCount];
+        characterButtons = new GameObject[_characterParentObj.transform.childCount];
 
-        for (int i = 0; i < characterParentObj.transform.childCount; i++)
+        for (int i = 0; i < _characterParentObj.transform.childCount; i++)
         {
-            characterButtons[i] = characterParentObj.transform.GetChild(i).gameObject;
+            characterButtons[i] = _characterParentObj.transform.GetChild(i).gameObject;
         }
 
         Initalization();
@@ -135,7 +135,7 @@ public class CharacterPanel : MonoBehaviour
 
             _isCharacterSelected = true;
 
-            characterSelectedCoroutine = StartCoroutine(OnCharacterSelected());
+            _characterSelectedCoroutine = StartCoroutine(OnCharacterSelected());
         }
     }
 
@@ -157,8 +157,8 @@ public class CharacterPanel : MonoBehaviour
     void AnimateCharacterNameAndSplashArt()
     {
         // Move the splash art position to the left and scale the character name to 0
-        splashArtTransform.anchoredPosition = charSplashPositionInit - new Vector2(1000, 0);
-        characterNameTransform.anchoredPosition = charNamePositionInit - new Vector2(20, 30);
+        splashArtTransform.anchoredPosition = _charSplashPositionInit - new Vector2(1000, 0);
+        characterNameTransform.anchoredPosition = _charNamePositionInit - new Vector2(20, 30);
         characterNameTransform.localScale = Vector3.zero;
 
         // Cancel any previous animations
@@ -167,10 +167,10 @@ public class CharacterPanel : MonoBehaviour
         LeanTween.cancel(characterNameTransform.gameObject);
 
         // Animate the splash art moving to the right and character name scaling to normal size
-        LeanTween.move(splashArtTransform, charSplashPositionInit - new Vector2(20, 0), 0.1f)
-        .setOnComplete(() => LeanTween.move(splashArtTransform, charSplashPositionInit, 1f).setEaseOutCirc());
+        LeanTween.move(splashArtTransform, _charSplashPositionInit - new Vector2(20, 0), 0.1f)
+        .setOnComplete(() => LeanTween.move(splashArtTransform, _charSplashPositionInit, 1f).setEaseOutCirc());
 
-        LeanTween.move(characterNameTransform, charNamePositionInit, 1.1f).setEaseOutCirc();
+        LeanTween.move(characterNameTransform, _charNamePositionInit, 1.1f).setEaseOutCirc();
         LeanTween.scale(characterNameTransform.gameObject, new Vector3(1.1f, 1.1f, 1f), 0.05f)
         .setEaseOutCirc()
         .setOnComplete(() =>
@@ -197,17 +197,17 @@ public class CharacterPanel : MonoBehaviour
         UiManager.instance.gameObjects[3].SetActive(true);
         UiManager.instance.gameObjects[4].SetActive(true);
 
-        enemyCharNameTransform.anchoredPosition = enemyNamePositionInit + new Vector2(20, -30);
-        enemysplashArtTransform.anchoredPosition = enemySplashPositionInit + new Vector2(1000, 0);
+        enemyCharNameTransform.anchoredPosition = _enemyNamePositionInit + new Vector2(20, -30);
+        enemysplashArtTransform.anchoredPosition = _enemySplashPositionInit + new Vector2(1000, 0);
         enemyCharNameTransform.localScale = Vector3.zero;
 
         LeanTween.cancel(enemyCharNameTransform.gameObject);
         LeanTween.cancel(enemysplashArtTransform.gameObject);
 
-        LeanTween.move(enemysplashArtTransform, enemySplashPositionInit + new Vector2(20, 0), 0.1f)
-        .setOnComplete(() => LeanTween.move(enemysplashArtTransform, enemySplashPositionInit, 1f).setEaseOutCirc());
+        LeanTween.move(enemysplashArtTransform, _enemySplashPositionInit + new Vector2(20, 0), 0.1f)
+        .setOnComplete(() => LeanTween.move(enemysplashArtTransform, _enemySplashPositionInit, 1f).setEaseOutCirc());
 
-        LeanTween.move(enemyCharNameTransform, enemyNamePositionInit, 1.1f).setEaseOutCirc();
+        LeanTween.move(enemyCharNameTransform, _enemyNamePositionInit, 1.1f).setEaseOutCirc();
         LeanTween.scale(enemyCharNameTransform.gameObject, new Vector3(1.1f, 1.1f, 1f), 0.05f)
         .setEaseOutCirc()
         .setOnComplete(() =>
@@ -227,7 +227,7 @@ public class CharacterPanel : MonoBehaviour
     void MoveButtonHighlight()
     {
         // Move the button highlight to the selected index
-        buttonHighlightTransform.localPosition = buttonsTransforms[currentSelIndex].localPosition;
+        buttonHighlightTransform.localPosition = _buttonsTransforms[currentSelIndex].localPosition;
         buttonHighlightCanvasGroup.alpha = 0;
 
         // Scale the button highlight to 1.1f and then scale it back to normal with a ease out circ animation
@@ -244,25 +244,25 @@ public class CharacterPanel : MonoBehaviour
     void Initalization()
     {
         // Save the initial position of the character name
-        charNamePositionInit = characterNameTransform.anchoredPosition;
+        _charNamePositionInit = characterNameTransform.anchoredPosition;
 
         // Save the initial position of the splash art
-        charSplashPositionInit = splashArtTransform.anchoredPosition;
+        _charSplashPositionInit = splashArtTransform.anchoredPosition;
 
         // Save the initial position of the enemy character name
-        enemyNamePositionInit = enemyCharNameTransform.anchoredPosition;
+        _enemyNamePositionInit = enemyCharNameTransform.anchoredPosition;
 
         // Save the initial position of the enemy splash art
-        enemySplashPositionInit = enemysplashArtTransform.anchoredPosition;  
+        _enemySplashPositionInit = enemysplashArtTransform.anchoredPosition;  
 
         // Save the initial position of the lightning
-        lightningPositionInit = lightningTransform.anchoredPosition;
+        _lightningPositionInit = lightningTransform.anchoredPosition;
 
         foreach (GameObject obj in characterButtons)
         {
             CanvasGroup cgComponent = obj.GetComponent<CanvasGroup>();
 
-            buttonsCanvasGroup.Add(cgComponent);
+            _buttonsCanvasGroup.Add(cgComponent);
         }
 
         // Add all the transform of the buttons to the list buttonsTransforms
@@ -272,13 +272,13 @@ public class CharacterPanel : MonoBehaviour
             RectTransform rectTransform = obj.GetComponent<RectTransform>();
 
             // Add the RectTransform to the list
-            buttonsTransforms.Add(rectTransform);
+            _buttonsTransforms.Add(rectTransform);
         }
 
-        foreach (RectTransform obj in buttonsTransforms)
+        foreach (RectTransform obj in _buttonsTransforms)
         {
             // Set the initial position of the button
-            buttonPositions.Add(obj.anchoredPosition);
+            _buttonPositions.Add(obj.anchoredPosition);
         }
 
 
@@ -286,31 +286,31 @@ public class CharacterPanel : MonoBehaviour
 
     void EnterCharacterSelect()
     {
-        lightningTransform.anchoredPosition = new Vector2(lightningPositionInit.x, lightningPositionInit.y + 1400f);
+        lightningTransform.anchoredPosition = new Vector2(_lightningPositionInit.x, _lightningPositionInit.y + 1400f);
         backgroundTransform.localScale = new Vector3(1.1f, 1.1f, 1f);
         characterPanelTransform.localScale = new Vector3(0f, 0f, 1f);
 
-        for (int i = 1; i < buttonPositions.Capacity; i++)
+        for (int i = 1; i < _buttonPositions.Capacity; i++)
         {
-            buttonsTransforms[i - 1].anchoredPosition = new Vector2(buttonPositions[i - 1].x, buttonPositions[i - 1].y - 20f);
-            buttonsCanvasGroup[i - 1].alpha = 0f;
-            buttonsCanvasGroup[i - 1].interactable = false;
+            _buttonsTransforms[i - 1].anchoredPosition = new Vector2(_buttonPositions[i - 1].x, _buttonPositions[i - 1].y - 20f);
+            _buttonsCanvasGroup[i - 1].alpha = 0f;
+            _buttonsCanvasGroup[i - 1].interactable = false;
         }
 
         LeanTween.scale(backgroundTransform.gameObject, Vector3.one, 0.5f).setEaseOutCirc()
         .setOnComplete(() =>
         {
-            LeanTween.move(lightningTransform, new Vector2(lightningPositionInit.x, lightningPositionInit.y - 20f), 0.5f).setEaseInCubic()
+            LeanTween.move(lightningTransform, new Vector2(_lightningPositionInit.x, _lightningPositionInit.y - 20f), 0.5f).setEaseInCubic()
             .setOnComplete(() => 
             {
-                LeanTween.move(lightningTransform, lightningPositionInit, 1f).setEaseOutCirc();
+                LeanTween.move(lightningTransform, _lightningPositionInit, 1f).setEaseOutCirc();
                 LeanTween.scale(characterPanelTransform.gameObject, new Vector3(1.1f, 1.1f, 1f), 0.15f).setEaseOutCubic()
                 .setOnComplete(() =>
                 {
                     LeanTween.scale(characterPanelTransform.gameObject, Vector3.one, 0.15f).setEaseInCubic()
                     .setOnComplete(() =>
                     {
-                        characterBtnsCoroutine = StartCoroutine(AnimateCharacterButtons());
+                        _characterBtnsCoroutine = StartCoroutine(AnimateCharacterButtons());
                     });
                 });
             });
@@ -319,10 +319,10 @@ public class CharacterPanel : MonoBehaviour
 
     IEnumerator AnimateCharacterButtons()
     {
-        for (int i = 1; i < buttonPositions.Capacity; i++)
+        for (int i = 1; i < _buttonPositions.Capacity; i++)
         {
-            LeanTween.move(buttonsTransforms[i - 1], new Vector2(buttonPositions[i - 1].x, buttonPositions[i - 1].y), 0.5f).setEaseOutBounce();
-            LeanTween.alphaCanvas(buttonsCanvasGroup[i - 1], 1f, 0.5f).setEaseOutCubic();
+            LeanTween.move(_buttonsTransforms[i - 1], new Vector2(_buttonPositions[i - 1].x, _buttonPositions[i - 1].y), 0.5f).setEaseOutBounce();
+            LeanTween.alphaCanvas(_buttonsCanvasGroup[i - 1], 1f, 0.5f).setEaseOutCubic();
             yield return new WaitForSeconds(0.1f);
         }
 
@@ -331,9 +331,9 @@ public class CharacterPanel : MonoBehaviour
         UiManager.instance.gameObjects[1].SetActive(true);
         UiManager.instance.gameObjects[2].SetActive(true);
 
-        for (int i = 1; i < buttonPositions.Capacity; i++)
+        for (int i = 1; i < _buttonPositions.Capacity; i++)
         {
-            buttonsCanvasGroup[i - 1].interactable = true;
+            _buttonsCanvasGroup[i - 1].interactable = true;
         }
 
         AnimateCharacterNameAndSplashArt();
@@ -346,7 +346,7 @@ public class CharacterPanel : MonoBehaviour
         LeanTween.cancel(buttonHighlightTransform.gameObject);
 
         LeanTween.scale(buttonHighlightTransform.gameObject, new Vector3(3f, 3f, 1f), 0.5f).setEaseInCubic();
-        LeanTween.scale(buttonsTransforms[currentSelIndex], new Vector3(1.2f, 1.2f, 1f), 0.2f).setEaseOutCirc();
+        LeanTween.scale(_buttonsTransforms[currentSelIndex], new Vector3(1.2f, 1.2f, 1f), 0.2f).setEaseOutCirc();
         LeanTween.alphaCanvas(buttonHighlightCanvasGroup, 0f, 0.5f).setEaseInCubic();
 
         yield return new WaitForSeconds(2f);
