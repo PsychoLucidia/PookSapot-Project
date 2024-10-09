@@ -2931,7 +2931,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 6fbf0ba12d5ddae4ca15eeabfe45d59f, type: 2}
   - {fileID: 11400000, guid: 9a8cbf4766d4c90429bfb9e951b717ed, type: 2}
   - {fileID: 11400000, guid: 774c49a5786428042820b1b61b285df5, type: 2}
-  characterParentObj: {fileID: 1779196459}
+  _characterParentObj: {fileID: 1779196459}
   buttonHighlightTransform: {fileID: 1424161490}
   characterNameTransform: {fileID: 689660119}
   splashArtTransform: {fileID: 819035470}
@@ -2949,14 +2949,14 @@ MonoBehaviour:
   currentSelIndex: 0
   previousSelIndex: 0
   _isCharacterSelected: 0
-  buttonsTransforms: []
-  charNamePositionInit: {x: 408.158, y: -178.2685}
-  charSplashPositionInit: {x: -552.1259, y: 0}
-  enemyNamePositionInit: {x: 0, y: 0}
-  enemySplashPositionInit: {x: 0, y: 0}
-  lightningPositionInit: {x: 0, y: 0}
-  buttonPositions: []
-  buttonsCanvasGroup: []
+  _buttonsTransforms: []
+  _charNamePositionInit: {x: 0, y: 0}
+  _charSplashPositionInit: {x: 0, y: 0}
+  _enemyNamePositionInit: {x: 0, y: 0}
+  _enemySplashPositionInit: {x: 0, y: 0}
+  _lightningPositionInit: {x: 0, y: 0}
+  _buttonPositions: []
+  _buttonsCanvasGroup: []
 --- !u!1 &1779196459
 GameObject:
   m_ObjectHideFlags: 0
