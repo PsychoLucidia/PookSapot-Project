@@ -7,7 +7,7 @@ public class EnemyHurtbox : MonoBehaviour
     [SerializeField] Light orangeLight;
     [SerializeField] SpiderStat spiderStat;
     [SerializeField] float colorFloat;
-    [SerializeField] bool isEnemy;
+    
     // Start is called before the first frame update
     void Start()
     {
@@ -22,20 +22,17 @@ public class EnemyHurtbox : MonoBehaviour
 
     public void LightIntensityTween(float intensity)
     {
-        if (isEnemy)
+        if (spiderStat.health >= (spiderStat.maxHealth * 0.60))   // color of health if it is below 100 but above 60 percent
         {
-            if (spiderStat.health >= (spiderStat.maxHealth * 0.60))   // color of health if it is below 100 but above 60 percent
-            {
-                orangeLight.color = Color.green;
-            }
-            else if (spiderStat.health >= (spiderStat.maxHealth * 0.25))  // color of health if it is below 60 but above 20 percent
-            {
-                orangeLight.color = Color.yellow;
-            }
-            else
-            {
-                orangeLight.color = Color.red; // color of health if it is below 20 percent
-            }
+            orangeLight.color = Color.green;
+        }
+        else if (spiderStat.health >= (spiderStat.maxHealth * 0.25))  // color of health if it is below 60 but above 20 percent
+        {
+            orangeLight.color = Color.yellow;
+        }
+        else
+        {
+            orangeLight.color = Color.red; // color of health if it is below 20 percent
         }
 
         orangeLight.intensity = intensity;

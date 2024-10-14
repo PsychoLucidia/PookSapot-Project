@@ -1415,6 +1415,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   orangeLight: {fileID: 0}
+  spiderStat: {fileID: 8814313405155100113}
+  colorFloat: 0
 --- !u!65 &3773947151665109053
 BoxCollider:
   m_ObjectHideFlags: 0
