@@ -19,6 +19,7 @@ public class PlayerMovementCC : MonoBehaviour
     public Transform lookAtPos;
     public CharacterController controller;
     public LayerMask layerMask;
+    public GameObject onFlipObj;
     public float playerHeight = 2f;
     public bool isAttacking = false;
 
@@ -47,6 +48,10 @@ public class PlayerMovementCC : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        GameObject root = GameObject.Find("CanvasStatic");
+        Transform battleUI = root.transform.Find("BattleUI");
+        onFlipObj = battleUI.transform.Find("WarnText").gameObject;
+
         spiderStat = this.gameObject.GetComponent<SpiderStat>();
         controller = this.gameObject.GetComponent<CharacterController>();
         rb = this.gameObject.GetComponent<Rigidbody>();
@@ -101,9 +106,15 @@ public class PlayerMovementCC : MonoBehaviour
                 _moveZ = 0;
             }
 
+            if (controlFlip != ControlFlip.NoFlip)
+            {
+                onFlipObj.SetActive(true);
+            }
+
             if (controlFlip == ControlFlip.NoFlip)
             {
                 _moveZ = _verticalMove;
+                onFlipObj.SetActive(false);
             }
         }
         else
@@ -114,9 +125,15 @@ public class PlayerMovementCC : MonoBehaviour
                 _moveZ = 0;
             }
 
+            if (controlFlip != ControlFlip.Flipped)
+            {
+                onFlipObj.SetActive(true);
+            }
+
             if (controlFlip == ControlFlip.Flipped)
             {
                 _moveZ = -_verticalMove;
+                onFlipObj.SetActive(false);
             }
         }
 
