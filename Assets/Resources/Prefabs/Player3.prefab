@@ -964,7 +964,7 @@ MonoBehaviour:
   _horizonMove: 0
   _verticalMove: 0
   _gravity: -9.81
-  _speed: 6
+  _speed: 7
   groundFitter: {fileID: 0}
   rb: {fileID: 0}
   playerHitbox: {fileID: 0}

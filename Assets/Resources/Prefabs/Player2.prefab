@@ -1275,7 +1275,7 @@ MonoBehaviour:
   stamina: 90
   currentStamina: 0
   spiderDamage: 30
-  spiderDefense: 36
+  spiderDefense: 40
   isEnemy: 0
   isInvulnerable: 0
   staminaCooldown: 1.2

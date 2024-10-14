@@ -1150,7 +1150,6 @@ MonoBehaviour:
   orangeLight: {fileID: 0}
   spiderStat: {fileID: 8814313405155100113}
   colorFloat: 0
-  isEnemy: 0
 --- !u!65 &3773947151665109053
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -1373,12 +1372,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 95cd38506c7388f47ba9f055b37aeb0a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHealth: 200
+  maxHealth: 140
   health: 0
   stamina: 90
   currentStamina: 0
   spiderDamage: 30
-  spiderDefense: 36
+  spiderDefense: 40
   isEnemy: 1
   isInvulnerable: 0
   staminaCooldown: 1.2

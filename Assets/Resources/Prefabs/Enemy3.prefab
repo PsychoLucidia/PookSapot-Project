@@ -1669,7 +1669,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 95cd38506c7388f47ba9f055b37aeb0a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHealth: 180
+  maxHealth: 110
   health: 0
   stamina: 100
   currentStamina: 0
@@ -1704,7 +1704,7 @@ MonoBehaviour:
   _tempTimer: 0
   horizonMove: 0
   verticalMove: 0
-  speed: 6
+  speed: 7
   dashSpeed: 3
   gravity: -9.81
   enemyHeight: 1.3
