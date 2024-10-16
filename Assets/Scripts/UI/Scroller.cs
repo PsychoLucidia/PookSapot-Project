@@ -3,10 +3,10 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class Parallax : MonoBehaviour
+public class Scroller : MonoBehaviour
 {
     [SerializeField] private RawImage _img;
-    [SerializeField] public float _x, _y;
+    [SerializeField] private float _x, _y;
 
     void Update()
     {
