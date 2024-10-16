@@ -1195,6 +1195,7 @@ MonoBehaviour:
   layerMask:
     serializedVersion: 2
     m_Bits: 64
+  onFlipObj: {fileID: 0}
   playerHeight: 1.3
   isAttacking: 0
   soundMove: {fileID: 0}
@@ -1274,7 +1275,7 @@ MonoBehaviour:
   health: 0
   stamina: 90
   currentStamina: 0
-  spiderDamage: 30
+  spiderDamage: 28
   spiderDefense: 40
   isEnemy: 0
   isInvulnerable: 0

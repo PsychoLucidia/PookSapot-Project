@@ -3072,6 +3072,10 @@ PrefabInstance:
       value: WebFoor1 (1)
       objectReference: {fileID: 0}
     - target: {fileID: 6552537116528550760, guid: a5e3f03213e895e46b94d07e79e850e3, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6552537116528550760, guid: a5e3f03213e895e46b94d07e79e850e3, type: 3}
       propertyPath: m_StaticEditorFlags
       value: 127
       objectReference: {fileID: 0}

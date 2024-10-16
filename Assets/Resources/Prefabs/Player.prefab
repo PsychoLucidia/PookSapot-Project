@@ -811,10 +811,10 @@ MonoBehaviour:
   spiderDefense: 28
   isEnemy: 0
   isInvulnerable: 0
-  staminaCooldown: 1
+  staminaCooldown: 0.8
   curStaminaCooldown: 0
-  regenRate: 9
-  staminaConsume: 15
+  regenRate: 10
+  staminaConsume: 10
   battleUI: {fileID: 0}
   spiderHealth: {fileID: 0}
 --- !u!114 &802228506780480824

@@ -17,4 +17,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/BattleScene.unity
     guid: 8530b724d95445546913582d0c892ac4
+  - enabled: 1
+    path: Assets/Scenes/MultiplayerScenes/CharacterSelect_Multiplayer.unity
+    guid: 6975187344aab554bb1a95b5ff171dbb
   m_configObjects: {}

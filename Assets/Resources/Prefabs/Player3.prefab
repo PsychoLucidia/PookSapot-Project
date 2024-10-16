@@ -1059,7 +1059,7 @@ MonoBehaviour:
   isInvulnerable: 0
   staminaCooldown: 1
   curStaminaCooldown: 0
-  regenRate: 10
+  regenRate: 9
   staminaConsume: 15
   battleUI: {fileID: 0}
   spiderHealth: {fileID: 0}
