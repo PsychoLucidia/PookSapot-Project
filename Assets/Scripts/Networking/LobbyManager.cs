@@ -8,22 +8,30 @@ using Photon.Realtime;
 public class LobbyManager : MonoBehaviourPunCallbacks
 {
     public GameObject waitingForPlayers;
+    public GameObject charSelect;
     public TextMeshProUGUI roomName;
+    public GameObject player1;
+    public GameObject player2;
+
+    public int playerCount = PhotonNetwork.CurrentRoom.PlayerCount;
 
     public float updateTimeInterval = 1.5f;
     float nextUpdateTime;
 
-    public List<PlayerItem> playerLists = new List<PlayerItem> ();
     public PlayerItem playerItemPrefab;
     public Transform playerItemParent;
     void Start()
     {
         PhotonNetwork.JoinLobby();
+        Debug.Log("Joined Character Select Lobby");
+        player1.gameObject.SetActive(true);
+        roomName.text = "Room Name: " + PhotonNetwork.CurrentRoom.Name;
     }
 
     public override void OnJoinedLobby()
     {
-        Debug.Log("Joined Lobby");
+        Debug.Log("Joined Lobby nga");
+        
         base.OnJoinedLobby();
     }
     public override void OnConnectedToMaster()
@@ -33,22 +41,19 @@ public class LobbyManager : MonoBehaviourPunCallbacks
 
     public override void OnJoinedRoom()
     {
-
-        Debug.Log("Joined Room");
-        roomName.text = "Room Name: " + PhotonNetwork.CurrentRoom.Name;
-        UpdatePlayerList();
+        
+        Debug.Log("Room name changed");
         base.OnJoinedRoom();
     }
 
     public override void OnPlayerEnteredRoom(Player newPlayer)
     {
-        UpdatePlayerList();
+        CountPlayer();
         base.OnPlayerEnteredRoom(newPlayer);
     }
 
     public override void OnPlayerLeftRoom(Player otherPlayer)
     {
-        UpdatePlayerList();
         base.OnPlayerLeftRoom(otherPlayer);
     }
 
@@ -58,31 +63,30 @@ public class LobbyManager : MonoBehaviourPunCallbacks
         
     }
 
-    void UpdatePlayerList()
+    public void CountPlayer()
     {
-        foreach (PlayerItem item in playerLists)
+        if (playerCount == 2)
         {
-            Destroy (item.gameObject);
-        }
-        playerLists.Clear();
-
-        if (PhotonNetwork.CurrentRoom == null) 
-        {
-            return;
-        }
-
-        foreach (KeyValuePair<int, Player> player in PhotonNetwork.CurrentRoom.Players)
-        {
-            PlayerItem newPlayerItem = Instantiate(playerItemPrefab, playerItemParent);
-            newPlayerItem.SetPlayerInfo(player.Value);
-
-            if (player.Value == PhotonNetwork.LocalPlayer)
-            {
-                newPlayerItem.ApplyLocalChanges();
-            }
-
-            playerLists.Add (newPlayerItem);
+            player2.gameObject.SetActive(true);
+            Delay();
         }
     }
+
+    IEnumerator SetActive()
+    {
+        // suspend execution for 5 seconds
+        yield return new WaitForSeconds(2);
+        waitingForPlayers.gameObject.SetActive(false);
+        charSelect.gameObject.SetActive(true);
+        Debug.Log("ewan");
+    }
+
+    IEnumerator Delay()
+    {
+        
+        yield return StartCoroutine("SetActive");
+
+    }
+
 
 }

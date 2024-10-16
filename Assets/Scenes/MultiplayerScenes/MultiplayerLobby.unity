@@ -1100,8 +1100,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _img: {fileID: 795668745}
-  _x: 0.2
-  _y: 0
+  _x: 0.02
+  _y: 0.02
 --- !u!1 &823375895
 GameObject:
   m_ObjectHideFlags: 0

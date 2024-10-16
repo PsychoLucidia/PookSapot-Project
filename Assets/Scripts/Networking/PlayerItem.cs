@@ -11,8 +11,6 @@ public class PlayerItem : MonoBehaviour
     public TextMeshProUGUI playerName;
     public Image playerImage;
 
-    
-
     public Color player1Color;
     public Color player2Color;
     
