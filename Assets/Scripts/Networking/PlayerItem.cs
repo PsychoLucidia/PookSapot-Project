@@ -11,10 +11,15 @@ public class PlayerItem : MonoBehaviour
     public TextMeshProUGUI playerName;
     public Image playerImage;
 
+    
+
+    public Color player1Color;
+    public Color player2Color;
+    
     // Start is called before the first frame update
     void Start()
     {
-        
+        Debug.Log("hello");
     }
 
     // Update is called once per frame
@@ -23,8 +28,13 @@ public class PlayerItem : MonoBehaviour
         
     }
 
-    public void SetPlayerInfo()
+    public void SetPlayerInfo(Player _player)
     {
         playerName.text = "Player";
+    }
+
+    public void ApplyLocalChanges()
+    {
+        playerImage.color = player1Color;
     }
 }

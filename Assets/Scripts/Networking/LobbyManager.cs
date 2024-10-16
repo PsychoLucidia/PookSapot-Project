@@ -64,7 +64,7 @@ public class LobbyManager : MonoBehaviourPunCallbacks
         {
             Destroy (item.gameObject);
         }
-        playerLists.Clear ();
+        playerLists.Clear();
 
         if (PhotonNetwork.CurrentRoom == null) 
         {
@@ -75,6 +75,12 @@ public class LobbyManager : MonoBehaviourPunCallbacks
         {
             PlayerItem newPlayerItem = Instantiate(playerItemPrefab, playerItemParent);
             newPlayerItem.SetPlayerInfo(player.Value);
+
+            if (player.Value == PhotonNetwork.LocalPlayer)
+            {
+                newPlayerItem.ApplyLocalChanges();
+            }
+
             playerLists.Add (newPlayerItem);
         }
     }
