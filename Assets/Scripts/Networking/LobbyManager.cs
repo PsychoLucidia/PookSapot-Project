@@ -27,6 +27,7 @@ public class LobbyManager : MonoBehaviourPunCallbacks
         Debug.Log("Joined Character Select Lobby");
         player1.gameObject.SetActive(true);
         roomName.text = "Room Name: " + PhotonNetwork.CurrentRoom.Name;
+        CountPlayer();
     }
 
     public override void OnJoinedLobby()
