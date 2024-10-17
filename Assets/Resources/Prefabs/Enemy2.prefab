@@ -1420,7 +1420,7 @@ MonoBehaviour:
   _horizonMoveIndex: 0
   _verticalMoveIndex: 0
   _hitboxActiveDelay: 0.12
-  moveMaxDistance: 30
+  moveMaxDistance: 10
   controller: {fileID: 0}
   groundLayer:
     serializedVersion: 2

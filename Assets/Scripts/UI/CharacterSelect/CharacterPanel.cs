@@ -352,7 +352,7 @@ public class CharacterPanel : MonoBehaviour
         yield return new WaitForSeconds(2f);
 
         Fader.instance.gameObject.SetActive(true);
-        Fader.instance.FadeEnable(1, 0.5f, true, 3);
+        Fader.instance.FadeEnable(1, 0.5f, true, 5);
         yield break;
     }
 }

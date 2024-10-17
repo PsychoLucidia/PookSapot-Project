@@ -6,6 +6,8 @@ using UnityEngine.AI;
 
 public class EnemyManager : MonoBehaviour
 {
+    #region Variables
+
     [Header("Debug")]
     [SerializeField] float _threshold;
     [SerializeField] float _timer = 0f;
@@ -61,6 +63,11 @@ public class EnemyManager : MonoBehaviour
     [SerializeField] float _attackProbability;
     [SerializeField] float _normalizedProbability;
 
+    // Non-Serialized
+    float _attackTimer;
+    float _enemyDirection;
+
+    #endregion
 
     void Awake()
     {
@@ -304,14 +311,15 @@ public class EnemyManager : MonoBehaviour
         }
     }
 
-
     void AttackProbabilityCheck()
     {
         _normalizedProbability = _attackProbability / 100;
+        _attackTimer += Time.deltaTime;
 
-        if (Random.Range(0f, 1f) < _normalizedProbability)
+        if (Random.Range(0f, 1f) < _normalizedProbability && _attackTimer > 0.5f)
         {
             Attack();
+            _attackTimer = 0f;
         }
     }
 
@@ -345,7 +353,9 @@ public class EnemyManager : MonoBehaviour
 
     void EnemyPosition()
     {
-        if (this.transform.position.x > 50f)
+        _enemyDirection = (_playerTransform.position.x - this.transform.position.x) / 1f;
+
+        if (this.transform.position.x > 50f || _enemyDirection <= 2f)
         {
             state = EnemyState.ForceBackward;
             _tempTimer = Random.Range(5f, 7f);

@@ -1725,7 +1725,7 @@ MonoBehaviour:
   gameState: 2
   pauseState: 0
   playerInfo: {fileID: 11400000, guid: 6fbf0ba12d5ddae4ca15eeabfe45d59f, type: 2}
-  enemyInfo: {fileID: 11400000, guid: 9a8cbf4766d4c90429bfb9e951b717ed, type: 2}
+  enemyInfo: {fileID: 11400000, guid: 774c49a5786428042820b1b61b285df5, type: 2}
 --- !u!4 &679044401
 Transform:
   m_ObjectHideFlags: 0
