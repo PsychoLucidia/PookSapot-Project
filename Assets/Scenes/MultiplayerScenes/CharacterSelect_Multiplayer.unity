@@ -344,7 +344,7 @@ MonoBehaviour:
     callback:
       m_PersistentCalls:
         m_Calls:
-        - m_Target: {fileID: 1776510575}
+        - m_Target: {fileID: 0}
           m_TargetAssemblyTypeName: CharacterPanel, Assembly-CSharp
           m_MethodName: OnChangeIndex
           m_Mode: 3
@@ -424,7 +424,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1776510575}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: CharacterPanel, Assembly-CSharp
         m_MethodName: SelectCharacter
         m_Mode: 1
@@ -1094,7 +1094,7 @@ MonoBehaviour:
     callback:
       m_PersistentCalls:
         m_Calls:
-        - m_Target: {fileID: 1776510575}
+        - m_Target: {fileID: 0}
           m_TargetAssemblyTypeName: CharacterPanel, Assembly-CSharp
           m_MethodName: OnChangeIndex
           m_Mode: 3
@@ -1174,7 +1174,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1776510575}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: CharacterPanel, Assembly-CSharp
         m_MethodName: SelectCharacter
         m_Mode: 1
@@ -3225,7 +3225,7 @@ MonoBehaviour:
     callback:
       m_PersistentCalls:
         m_Calls:
-        - m_Target: {fileID: 1776510575}
+        - m_Target: {fileID: 0}
           m_TargetAssemblyTypeName: CharacterPanel, Assembly-CSharp
           m_MethodName: OnChangeIndex
           m_Mode: 3
@@ -3305,7 +3305,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1776510575}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: CharacterPanel, Assembly-CSharp
         m_MethodName: SelectCharacter
         m_Mode: 1
@@ -3477,39 +3477,25 @@ MonoBehaviour:
   m_GameObject: {fileID: 1776510573}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 85cd03805e6919c4aadc283315690e73, type: 3}
+  m_Script: {fileID: 11500000, guid: 8fca3b1fcc035b240a49a64b3c853b0e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  fighterInfo:
-  - {fileID: 11400000, guid: 6fbf0ba12d5ddae4ca15eeabfe45d59f, type: 2}
-  - {fileID: 11400000, guid: 9a8cbf4766d4c90429bfb9e951b717ed, type: 2}
-  - {fileID: 11400000, guid: 774c49a5786428042820b1b61b285df5, type: 2}
+  fighterInfo: []
   _characterParentObj: {fileID: 1779196459}
-  buttonHighlightTransform: {fileID: 1424161490}
-  characterNameTransform: {fileID: 689660119}
-  splashArtTransform: {fileID: 819035470}
-  lightningTransform: {fileID: 385287568}
-  backgroundTransform: {fileID: 1031389914}
-  characterPanelTransform: {fileID: 761457759}
-  enemyCharNameTransform: {fileID: 716366295}
-  enemysplashArtTransform: {fileID: 1071430142}
-  buttonHighlightCanvasGroup: {fileID: 1424161493}
+  buttonHighlightTransform_Player1: {fileID: 1424161490}
+  buttonHighlightTransform_Player2: {fileID: 32042646}
+  buttonHighlightCanvasGroup_Player1: {fileID: 1424161493}
+  buttonHighlightCanvasGroup_Player2: {fileID: 32042647}
+  characterName_Player1: {fileID: 689660120}
+  splashArtImage_Player1: {fileID: 819035471}
+  characterName_Player2: {fileID: 716366296}
+  splashArtImage_Player2: {fileID: 1071430143}
   characterButtons: []
-  characterName: {fileID: 689660120}
-  splashArtImage: {fileID: 819035471}
-  enemyCharName: {fileID: 716366296}
-  enemysplashArtImage: {fileID: 1071430143}
   currentSelIndex: 0
   previousSelIndex: 0
+  playerReady: 0
+  opponentReady: 0
   _isCharacterSelected: 0
-  _buttonsTransforms: []
-  _charNamePositionInit: {x: 0, y: 0}
-  _charSplashPositionInit: {x: 0, y: 0}
-  _enemyNamePositionInit: {x: 0, y: 0}
-  _enemySplashPositionInit: {x: 0, y: 0}
-  _lightningPositionInit: {x: 0, y: 0}
-  _buttonPositions: []
-  _buttonsCanvasGroup: []
 --- !u!1 &1779196459
 GameObject:
   m_ObjectHideFlags: 0
