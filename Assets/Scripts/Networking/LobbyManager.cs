@@ -13,7 +13,7 @@ public class LobbyManager : MonoBehaviourPunCallbacks
     public GameObject player1;
     public GameObject player2;
 
-    public int playerCount = PhotonNetwork.CurrentRoom.PlayerCount;
+    public int playerCount; 
 
     public float updateTimeInterval = 1.5f;
     float nextUpdateTime;
@@ -23,6 +23,7 @@ public class LobbyManager : MonoBehaviourPunCallbacks
     void Start()
     {
         PhotonNetwork.JoinLobby();
+        playerCount = PhotonNetwork.CurrentRoom.PlayerCount;
         Debug.Log("Joined Character Select Lobby");
         player1.gameObject.SetActive(true);
         roomName.text = "Room Name: " + PhotonNetwork.CurrentRoom.Name;
@@ -60,32 +61,18 @@ public class LobbyManager : MonoBehaviourPunCallbacks
     // Update is called once per frame
     void Update()
     {
-        
+
     }
 
     public void CountPlayer()
     {
+        playerCount = PhotonNetwork.CurrentRoom.PlayerCount;
+
         if (playerCount == 2)
         {
             player2.gameObject.SetActive(true);
-            Delay();
+    
         }
-    }
-
-    IEnumerator SetActive()
-    {
-        // suspend execution for 5 seconds
-        yield return new WaitForSeconds(2);
-        waitingForPlayers.gameObject.SetActive(false);
-        charSelect.gameObject.SetActive(true);
-        Debug.Log("ewan");
-    }
-
-    IEnumerator Delay()
-    {
-        
-        yield return StartCoroutine("SetActive");
-
     }
 
 
