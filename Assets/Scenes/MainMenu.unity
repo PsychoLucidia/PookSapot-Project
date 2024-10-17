@@ -387,7 +387,7 @@ MonoBehaviour:
   m_VertexBufferAutoSizeReduction: 0
   m_useMaxVisibleDescender: 1
   m_pageToDisplay: 1
-  m_margin: {x: 0, y: 50.76001, z: 277.0044, w: 50.75995}
+  m_margin: {x: 10.378204, y: 81.894585, z: 277.0044, w: 71.51634}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_hasFontAssetChanged: 0
@@ -560,7 +560,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   hoverObject: {fileID: 918356369}
-  button: {fileID: 110519480}
+  clickMessages: []
+  messageDisplay: {fileID: 90275279}
+  hoverText: Looking to tweak something?
 --- !u!1 &171584235
 GameObject:
   m_ObjectHideFlags: 0
@@ -2190,7 +2192,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   hoverObject: {fileID: 918356369}
-  button: {fileID: 648771927}
+  clickMessages: []
+  messageDisplay: {fileID: 90275279}
+  hoverText: Mama didn't raise a quitter right?
 --- !u!1 &718677939
 GameObject:
   m_ObjectHideFlags: 0
@@ -3033,7 +3037,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &918356370
 RectTransform:
   m_ObjectHideFlags: 0
@@ -3043,7 +3047,7 @@ RectTransform:
   m_GameObject: {fileID: 918356369}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 1.1008203, y: 1.1008203, z: 1.1008203}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 90275278}
@@ -3051,7 +3055,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -514, y: 279}
+  m_AnchoredPosition: {x: -520, y: 328}
   m_SizeDelta: {x: 761.9963, y: 379.7552}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &918356371
@@ -5347,7 +5351,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   hoverObject: {fileID: 918356369}
-  button: {fileID: 1508277862}
+  clickMessages: []
+  messageDisplay: {fileID: 90275279}
+  hoverText: Ready to face the Gagambots?
 --- !u!1 &1510530887
 GameObject:
   m_ObjectHideFlags: 0
@@ -6210,7 +6216,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   hoverObject: {fileID: 918356369}
-  button: {fileID: 1706179553}
+  clickMessages: []
+  messageDisplay: {fileID: 90275279}
+  hoverText: You sure you can win against your friend?
 --- !u!1 &1764612125
 GameObject:
   m_ObjectHideFlags: 0
@@ -6222,6 +6230,8 @@ GameObject:
   - component: {fileID: 1764612126}
   - component: {fileID: 1764612128}
   - component: {fileID: 1764612127}
+  - component: {fileID: 1764612130}
+  - component: {fileID: 1764612129}
   m_Layer: 5
   m_Name: Image
   m_TagString: Untagged
@@ -6243,11 +6253,11 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 171584236}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: -240.77}
-  m_SizeDelta: {x: 1920, y: 1440}
-  m_Pivot: {x: 0.5, y: 0.5}
+  m_AnchorMin: {x: 0.5, y: 1}
+  m_AnchorMax: {x: 0.5, y: 1}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 927.25, y: 1440}
+  m_Pivot: {x: 0.5, y: 1}
 --- !u!114 &1764612127
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6286,6 +6296,69 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1764612125}
   m_CullTransparentMesh: 1
+--- !u!114 &1764612129
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1764612125}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Navigation:
+    m_Mode: 3
+    m_WrapAround: 0
+    m_SelectOnUp: {fileID: 0}
+    m_SelectOnDown: {fileID: 0}
+    m_SelectOnLeft: {fileID: 0}
+    m_SelectOnRight: {fileID: 0}
+  m_Transition: 1
+  m_Colors:
+    m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
+    m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
+    m_PressedColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
+    m_SelectedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
+    m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
+    m_ColorMultiplier: 1
+    m_FadeDuration: 0.1
+  m_SpriteState:
+    m_HighlightedSprite: {fileID: 0}
+    m_PressedSprite: {fileID: 0}
+    m_SelectedSprite: {fileID: 0}
+    m_DisabledSprite: {fileID: 0}
+  m_AnimationTriggers:
+    m_NormalTrigger: Normal
+    m_HighlightedTrigger: Highlighted
+    m_PressedTrigger: Pressed
+    m_SelectedTrigger: Selected
+    m_DisabledTrigger: Disabled
+  m_Interactable: 1
+  m_TargetGraphic: {fileID: 1764612127}
+  m_OnClick:
+    m_PersistentCalls:
+      m_Calls: []
+--- !u!114 &1764612130
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1764612125}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e16dfd48476729d49af4580b82724c53, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  hoverObject: {fileID: 918356369}
+  clickMessages:
+  - Gat-eb the goat
+  - Merelos my love
+  - crush ko si jared
+  messageDisplay: {fileID: 90275279}
+  hoverText: 
 --- !u!1 &1778977017
 GameObject:
   m_ObjectHideFlags: 0
