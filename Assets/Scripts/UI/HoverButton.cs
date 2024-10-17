@@ -47,7 +47,6 @@ public class HoverButton : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
         hoverObject.SetActive(true);
 
         // Display a random message from the clickMessages list
-        DisplayRandomClickMessage();
     }
 
     // Method to update the hover text
