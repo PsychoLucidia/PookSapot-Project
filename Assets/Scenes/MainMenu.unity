@@ -6256,7 +6256,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 1}
   m_AnchorMax: {x: 0.5, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 927.25, y: 1440}
+  m_SizeDelta: {x: 673.4407, y: 1440}
   m_Pivot: {x: 0.5, y: 1}
 --- !u!114 &1764612127
 MonoBehaviour:
@@ -6347,18 +6347,18 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1764612125}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: e16dfd48476729d49af4580b82724c53, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   hoverObject: {fileID: 918356369}
   clickMessages:
-  - Gat-eb the goat
-  - Merelos my love
-  - crush ko si jared
+  - The name's Elijah!             Nice to meet cha'!
+  - Are you my next challenger?
+  - I'm looking forward to facing you in the arena!
   messageDisplay: {fileID: 90275279}
-  hoverText: 
+  hoverText: Hey there!                 Welcome to Pook-Sapot!
 --- !u!1 &1778977017
 GameObject:
   m_ObjectHideFlags: 0
