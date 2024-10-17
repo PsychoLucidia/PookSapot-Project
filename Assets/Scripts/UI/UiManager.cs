@@ -1,6 +1,5 @@
 using System.Collections;
 using System.Collections.Generic;
-using System.Runtime.CompilerServices;
 using UnityEngine;
 
 public class UiManager : MonoBehaviour
@@ -11,6 +10,9 @@ public class UiManager : MonoBehaviour
     [Header("Game Objects")]
     public GameObject[] gameObjects;
     public GameObject[] enableObject;
+
+    [Header("List")]
+    public List<IUIDialogue> dialogueList = new List<IUIDialogue>();
 
     [Header("Fader")]
     public GameObject faderObj;
@@ -48,4 +50,9 @@ public class UiManager : MonoBehaviour
     {
         gameObjects[index].SetActive(true);
     }
+}
+
+public interface IUIDialogue
+{
+    void SetDialogue();
 }
