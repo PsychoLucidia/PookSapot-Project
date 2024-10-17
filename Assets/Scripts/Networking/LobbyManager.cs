@@ -72,9 +72,20 @@ public class LobbyManager : MonoBehaviourPunCallbacks
         if (playerCount == 2)
         {
             player2.gameObject.SetActive(true);
-    
+            StartCoroutine(WaitAndLoad());
+
         }
     }
 
+    IEnumerator WaitAndLoad()
+    {
+        Debug.Log("Started Coroutine");
+
+        // Wait for 2 seconds
+        yield return new WaitForSeconds(2);
+        waitingForPlayers.gameObject.SetActive(false);
+        charSelect.gameObject.SetActive(true);
+        Debug.Log("2 seconds later...");
+    }
 
 }
