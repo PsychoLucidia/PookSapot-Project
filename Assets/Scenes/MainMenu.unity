@@ -301,7 +301,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 39.25, y: -3.5149841}
+  m_AnchoredPosition: {x: 39.248047, y: -3.5146332}
   m_SizeDelta: {x: -46.500004, y: -34.77002}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &90275279
@@ -563,6 +563,7 @@ MonoBehaviour:
   clickMessages: []
   messageDisplay: {fileID: 90275279}
   hoverText: Looking to tweak something?
+  isCharacter: 0
 --- !u!1 &171584235
 GameObject:
   m_ObjectHideFlags: 0
@@ -596,9 +597,9 @@ RectTransform:
   m_Children:
   - {fileID: 443895472}
   - {fileID: 1083425403}
+  - {fileID: 918356370}
   - {fileID: 1764612126}
   - {fileID: 22104896}
-  - {fileID: 918356370}
   m_Father: {fileID: 1648616380}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
@@ -2070,7 +2071,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: -6.93}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 402.6001, y: 97.8999}
+  m_AnchoredPosition: {x: 402.6006, y: 97.8999}
   m_SizeDelta: {x: 123.89838, y: 51.85721}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &648771925
@@ -2195,6 +2196,7 @@ MonoBehaviour:
   clickMessages: []
   messageDisplay: {fileID: 90275279}
   hoverText: Mama didn't raise a quitter right?
+  isCharacter: 0
 --- !u!1 &718677939
 GameObject:
   m_ObjectHideFlags: 0
@@ -3037,7 +3039,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &918356370
 RectTransform:
   m_ObjectHideFlags: 0
@@ -3045,19 +3047,19 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 918356369}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0.06104851, w: 0.99813485}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1.1008203, y: 1.1008203, z: 1.1008203}
-  m_ConstrainProportionsScale: 0
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 90275278}
   m_Father: {fileID: 171584236}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 7}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -520, y: 328}
+  m_AnchoredPosition: {x: -45.140015, y: 312.17572}
   m_SizeDelta: {x: 761.9963, y: 379.7552}
-  m_Pivot: {x: 0.5, y: 0.5}
+  m_Pivot: {x: 1.1534915, y: 0.23069806}
 --- !u!114 &918356371
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5205,7 +5207,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 0}
   m_AnchorMax: {x: 1, y: 0}
-  m_AnchoredPosition: {x: -246.52979, y: 114}
+  m_AnchoredPosition: {x: -246.5293, y: 114}
   m_SizeDelta: {x: 419.062, y: 130.9569}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1508277860
@@ -5354,6 +5356,7 @@ MonoBehaviour:
   clickMessages: []
   messageDisplay: {fileID: 90275279}
   hoverText: Ready to face the Gagambots?
+  isCharacter: 0
 --- !u!1 &1510530887
 GameObject:
   m_ObjectHideFlags: 0
@@ -6219,6 +6222,7 @@ MonoBehaviour:
   clickMessages: []
   messageDisplay: {fileID: 90275279}
   hoverText: You sure you can win against your friend?
+  isCharacter: 0
 --- !u!1 &1764612125
 GameObject:
   m_ObjectHideFlags: 0
@@ -6255,7 +6259,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 1}
   m_AnchorMax: {x: 0.5, y: 1}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: -53.2}
   m_SizeDelta: {x: 673.4407, y: 1440}
   m_Pivot: {x: 0.5, y: 1}
 --- !u!114 &1764612127
@@ -6359,6 +6363,7 @@ MonoBehaviour:
   - I'm looking forward to facing you in the arena!
   messageDisplay: {fileID: 90275279}
   hoverText: Hey there!                 Welcome to Pook-Sapot!
+  isCharacter: 1
 --- !u!1 &1778977017
 GameObject:
   m_ObjectHideFlags: 0

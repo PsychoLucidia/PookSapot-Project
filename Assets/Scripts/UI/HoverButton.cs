@@ -17,6 +17,7 @@ public class HoverButton : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
 
     // Text to display when hovering
     public string hoverText; // Text to show when hovering over the button
+    public bool isCharacter;
 
     // Start is called before the first frame update
     void Start()
@@ -29,25 +30,24 @@ public class HoverButton : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
     public void OnPointerEnter(PointerEventData eventData)
     {
         // Show the hoverObject and set its text
-        hoverObject.SetActive(true);
+        AnimateBox("Open");
         UpdateHoverText();
     }
 
     // Called when the pointer exits the Button
     public void OnPointerExit(PointerEventData eventData)
     {
-        // Hide the hoverObject
-        hoverObject.SetActive(false);
+        AnimateBox("Close");
     }
 
     // Called when the button is clicked
     public void OnPointerClick(PointerEventData eventData)
     {
-        // Show the hoverObject
-        hoverObject.SetActive(true);
-
         // Display a random message from the clickMessages list
-        DisplayRandomClickMessage();
+        if (isCharacter)
+        {
+            DisplayRandomClickMessage();
+        }
     }
 
     // Method to update the hover text
@@ -73,4 +73,40 @@ public class HoverButton : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
         // Display the selected message
         messageDisplay.text = clickMessages[randomIndex];
     }
+
+    void AnimateBox(string index)
+    {
+        switch (index)
+        {
+            case "Open":
+                hoverObject.SetActive(true);
+                LeanTween.cancel(hoverObject.transform.gameObject);
+
+                if (!hoverObject.activeSelf)
+                {
+                    hoverObject.transform.localScale = new Vector3(0f, 0f, 1f);
+                    hoverObject.transform.localRotation = Quaternion.Euler(0f, 0f, 0f);
+                }
+
+                LeanTween.rotateZ(hoverObject.transform.gameObject, 7f, 0.2f).setEaseOutCirc();
+
+                LeanTween.scale(hoverObject.transform.gameObject, new Vector3(1.1f, 1.1f, 1f), 0.1f).setEaseOutCirc().setOnComplete(() => {
+                    LeanTween.scale(hoverObject.transform.gameObject, new Vector3(0.95f, 0.5f, 1f), 0.05f).setEaseInCirc().setOnComplete(() => {
+                        LeanTween.scale(hoverObject.transform.gameObject, new Vector3(1f, 1f, 1f), 0.05f).setEaseOutCirc();
+                    });
+                });
+                break;
+            case "Close":
+                LeanTween.cancel(hoverObject.transform.gameObject);
+
+                LeanTween.rotateZ(hoverObject.transform.gameObject, 0f, 0.2f).setEaseInCirc();
+                LeanTween.scale(hoverObject.transform.gameObject, new Vector3(0f, 0f, 1f), 0.1f).setEaseInCirc().setOnComplete(() => {
+                    hoverObject.SetActive(false);
+                });
+                break;
+            default:
+                break;
+        }
+    }
+
 }
