@@ -41,6 +41,15 @@ MonoBehaviour:
   - RespawnSpaceship
   - OpponentReadyState
   - SyncCharacterSelection
+  - OnChangeIndex
+  - AnimateCharacterNameAndSplashArt
+  - AnimateEnemyCharacterNameSplashArt
+  - MoveButtonHighlight
+  - MoveButtonHighlight2
+  - SetCharacterNameAndSplashArt
+  - SetEnemyCharacterNameSplashArt
+  - P1ChangeIndex
+  - P2ChangeIndex
   DisableAutoOpenWizard: 1
   ShowSettings: 0
   DevRegionSetOnce: 1

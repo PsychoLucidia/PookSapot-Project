@@ -4,8 +4,12 @@ using UnityEngine;
 using UnityEngine.UI;
 using Photon.Pun;
 
+[RequireComponent(typeof(PhotonView))]
 public class MultiplayerCharSelect : MonoBehaviourPunCallbacks
 {
+    [Header("Photon")]
+    public int localActorNumber;
+
     [Header("Assets")]
     public FighterInfo[] fighterInfo;
 
@@ -22,8 +26,8 @@ public class MultiplayerCharSelect : MonoBehaviourPunCallbacks
 
     [Header("Enemy Transforms")]
     public RectTransform buttonHighlightTransform2;
-    public RectTransform enemyCharNameTransform;
-    public RectTransform enemysplashArtTransform;
+    public RectTransform characterNameTransform2;
+    public RectTransform splashArtTransform2;
 
     [Header("Canvas Groups")]
     public CanvasGroup buttonHighlightCanvasGroup;
@@ -41,9 +45,12 @@ public class MultiplayerCharSelect : MonoBehaviourPunCallbacks
     [Header("Indexes")]
     public int currentSelIndex;
     public int previousSelIndex;
+    public int currentSelIndex2;
+    public int previousSelIndex2;
 
     [Header("Bools")]
     [SerializeField] bool _isCharacterSelected = false;
+    [SerializeField] bool _isCharacterSelected2 = false;
 
     [Header("Lists Init")]
     [SerializeField] List<RectTransform> _buttonsTransforms = new List<RectTransform>();
@@ -57,7 +64,7 @@ public class MultiplayerCharSelect : MonoBehaviourPunCallbacks
     [SerializeField] List<Vector2> _buttonPositions = new List<Vector2>();
     [SerializeField] List<CanvasGroup> _buttonsCanvasGroup = new List<CanvasGroup>();
 
-    [Header("Coroutines")]
+    // Coroutines
     Coroutine _characterBtnsCoroutine;
     Coroutine _characterSelectedCoroutine;
 
@@ -76,6 +83,8 @@ public class MultiplayerCharSelect : MonoBehaviourPunCallbacks
     // Start is called before the first frame update
     void Start()
     {
+        localActorNumber = PhotonNetwork.LocalPlayer.ActorNumber;
+
         GameManager.instance.gameState = GameState.CharSelect;
 
         EnterCharacterSelect();
@@ -103,26 +112,51 @@ public class MultiplayerCharSelect : MonoBehaviourPunCallbacks
     /// Called when the user changes the selected index.
     /// </summary>
     /// <param name="newIndex">The new index that the user selected.</param>
-    public void OnChangeIndex(int newIndex)
+    [PunRPC]
+    public void OnChangeIndex(int actNumber, int newIndex)
     {
-        // If the new index is different from the current index, update the selected index and animate the character name and splash art
-        if (newIndex != currentSelIndex && !_isCharacterSelected)
+        switch (localActorNumber)
         {
-            // Store the previous selected index
-            previousSelIndex = currentSelIndex;
-
-            // Update the current selected index
-            currentSelIndex = newIndex;
-
-            // Update the character name and splash art based on the new selected index
-            SetCharacterNameAndSplashArt();
-
-            // Animate the character name and splash art
-            AnimateCharacterNameAndSplashArt();
-
-            // Move the button highlight to the new selected index
-            MoveButtonHighlight();
+            case 1:
+                if (newIndex != currentSelIndex && !_isCharacterSelected && actNumber == localActorNumber)
+                {
+                    photonView.RPC("P1ChangeIndex", RpcTarget.All, newIndex);
+                    photonView.RPC("SetCharacterNameAndSplashArt", RpcTarget.All);
+                    photonView.RPC("AnimateCharacterNameAndSplashArt", RpcTarget.All);
+                    photonView.RPC("MoveButtonHighlight", RpcTarget.All);
+                }
+                break;
+            case 2:
+                if (newIndex != currentSelIndex2 && !_isCharacterSelected2 && actNumber == localActorNumber)
+                {
+                    photonView.RPC("P2ChangeIndex", RpcTarget.All, newIndex);
+                    photonView.RPC("SetEnemyCharacterNameSplashArt", RpcTarget.All);
+                    photonView.RPC("AnimateEnemyCharacterNameSplashArt", RpcTarget.All);
+                    photonView.RPC("MoveButtonHighlight2", RpcTarget.All);
+                }
+                break;
         }
+    }
+
+    [PunRPC]
+    public void P1ChangeIndex(int newIndex)
+    {
+        previousSelIndex = currentSelIndex;
+
+        currentSelIndex = newIndex;
+    }
+
+    [PunRPC]
+    public void P2ChangeIndex(int newIndex)
+    {
+        previousSelIndex2 = currentSelIndex2;
+
+        currentSelIndex2 = newIndex;
+    }
+
+    public void MultiplayerChangeIndex(int newIndex)
+    {
+        photonView.RPC("OnChangeIndex", RpcTarget.All, localActorNumber, newIndex);
     }
 
     public void SelectCharacter()
@@ -133,8 +167,7 @@ public class MultiplayerCharSelect : MonoBehaviourPunCallbacks
 
             int enemyRandomizer = Random.Range(0, fighterInfo.Length);
             GameManager.instance.enemyInfo = fighterInfo[enemyRandomizer];
-            SetEnemyCharacterNameSplashArt(enemyRandomizer);
-            AnimateEnemyCharacterNameSplashArt();
+            // AnimateEnemyCharacterNameSplashArt();
 
             _isCharacterSelected = true;
 
@@ -142,9 +175,13 @@ public class MultiplayerCharSelect : MonoBehaviourPunCallbacks
         }
     }
 
+    #region Set Name & Splash Art
+
     /// <summary>
     /// Sets the character name and splash art sprites based on the current selected index.
     /// </summary>
+    
+    [PunRPC]
     void SetCharacterNameAndSplashArt()
     {
         // Set the character name sprite based on the current selected index
@@ -154,9 +191,19 @@ public class MultiplayerCharSelect : MonoBehaviourPunCallbacks
         splashArtImage.sprite = fighterInfo[currentSelIndex].characterSplashArt;
     }
 
+    [PunRPC]
+    void SetEnemyCharacterNameSplashArt()
+    {
+        enemyCharName.sprite = fighterInfo[currentSelIndex2].characterName;
+        enemysplashArtImage.sprite = fighterInfo[currentSelIndex2].characterSplashArt;
+    }
+
+    #endregion
+
     /// <summary>
     /// Animate the character name and splash art when the character index changes.
     /// </summary>
+    [PunRPC]
     void AnimateCharacterNameAndSplashArt()
     {
         // Move the splash art position to the left and scale the character name to 0
@@ -188,45 +235,39 @@ public class MultiplayerCharSelect : MonoBehaviourPunCallbacks
             });
         });
     }
-
-    void SetEnemyCharacterNameSplashArt(int randomEnemySelect)
-    {
-        enemyCharName.sprite = fighterInfo[randomEnemySelect].characterName;
-        enemysplashArtImage.sprite = fighterInfo[randomEnemySelect].characterSplashArt;
-    }
-
+    
+    [PunRPC]
     void AnimateEnemyCharacterNameSplashArt()
     {
-        UiManager.instance.gameObjects[3].SetActive(true);
-        UiManager.instance.gameObjects[4].SetActive(true);
+        characterNameTransform2.anchoredPosition = _enemyNamePositionInit + new Vector2(20, -30);
+        splashArtTransform2.anchoredPosition = _enemySplashPositionInit + new Vector2(1000, 0);
+        characterNameTransform2.localScale = Vector3.zero;
 
-        enemyCharNameTransform.anchoredPosition = _enemyNamePositionInit + new Vector2(20, -30);
-        enemysplashArtTransform.anchoredPosition = _enemySplashPositionInit + new Vector2(1000, 0);
-        enemyCharNameTransform.localScale = Vector3.zero;
+        LeanTween.cancel(characterNameTransform2.gameObject);
+        LeanTween.cancel(splashArtTransform2.gameObject);
 
-        LeanTween.cancel(enemyCharNameTransform.gameObject);
-        LeanTween.cancel(enemysplashArtTransform.gameObject);
+        LeanTween.move(splashArtTransform2, _enemySplashPositionInit + new Vector2(20, 0), 0.1f)
+        .setOnComplete(() => LeanTween.move(splashArtTransform2, _enemySplashPositionInit, 1f).setEaseOutCirc());
 
-        LeanTween.move(enemysplashArtTransform, _enemySplashPositionInit + new Vector2(20, 0), 0.1f)
-        .setOnComplete(() => LeanTween.move(enemysplashArtTransform, _enemySplashPositionInit, 1f).setEaseOutCirc());
-
-        LeanTween.move(enemyCharNameTransform, _enemyNamePositionInit, 1.1f).setEaseOutCirc();
-        LeanTween.scale(enemyCharNameTransform.gameObject, new Vector3(1.1f, 1.1f, 1f), 0.05f)
+        LeanTween.move(characterNameTransform2, _enemyNamePositionInit, 1.1f).setEaseOutCirc();
+        LeanTween.scale(characterNameTransform2.gameObject, new Vector3(1.1f, 1.1f, 1f), 0.05f)
         .setEaseOutCirc()
         .setOnComplete(() =>
         {
-            LeanTween.scale(enemyCharNameTransform.gameObject, new Vector3(0.9f, 0.9f, 1f), 0.05f)
+            LeanTween.scale(characterNameTransform2.gameObject, new Vector3(0.9f, 0.9f, 1f), 0.05f)
             .setEaseInCirc()
             .setOnComplete(() =>
             {
-                LeanTween.scale(enemyCharNameTransform.gameObject, Vector3.one, 1f).setEaseOutCirc();
+                LeanTween.scale(characterNameTransform2.gameObject, Vector3.one, 1f).setEaseOutCirc();
             });
         });
     }
+    
 
     /// <summary>
     /// Move the button highlight to the selected index.
     /// </summary>
+    [PunRPC]
     void MoveButtonHighlight()
     {
         // Move the button highlight to the selected index
@@ -237,6 +278,19 @@ public class MultiplayerCharSelect : MonoBehaviourPunCallbacks
         buttonHighlightTransform.localScale = new Vector3(1.1f, 1.1f, 1f);
         LeanTween.scale(buttonHighlightTransform.gameObject, Vector3.one, 0.2f).setEaseOutCirc();
         LeanTween.alphaCanvas(buttonHighlightCanvasGroup, 1f, 0.2f).setEaseOutCirc();
+    }
+
+    [PunRPC]
+    void MoveButtonHighlight2()
+    {
+        // Move the button highlight to the selected index
+        buttonHighlightTransform2.localPosition = _buttonsTransforms[currentSelIndex2].localPosition;
+        buttonHighlightCanvasGroup2.alpha = 0;
+
+        // Scale the button highlight to 1.1f and then scale it back to normal with a ease out circ animation
+        buttonHighlightTransform2.localScale = new Vector3(1.1f, 1.1f, 1f);
+        LeanTween.scale(buttonHighlightTransform2.gameObject, Vector3.one, 0.2f).setEaseOutCirc();
+        LeanTween.alphaCanvas(buttonHighlightCanvasGroup2, 1f, 0.2f).setEaseOutCirc();
     }
 
     /// <summary>
@@ -253,10 +307,10 @@ public class MultiplayerCharSelect : MonoBehaviourPunCallbacks
         _charSplashPositionInit = splashArtTransform.anchoredPosition;
 
         // Save the initial position of the enemy character name
-        _enemyNamePositionInit = enemyCharNameTransform.anchoredPosition;
+        _enemyNamePositionInit = characterNameTransform2.anchoredPosition;
 
         // Save the initial position of the enemy splash art
-        _enemySplashPositionInit = enemysplashArtTransform.anchoredPosition;
+        _enemySplashPositionInit = splashArtTransform2.anchoredPosition;
 
         // Save the initial position of the lightning
         _lightningPositionInit = lightningTransform.anchoredPosition;
@@ -330,9 +384,13 @@ public class MultiplayerCharSelect : MonoBehaviourPunCallbacks
         }
 
         SetCharacterNameAndSplashArt();
+        SetEnemyCharacterNameSplashArt();
         UiManager.instance.gameObjects[0].SetActive(true);
         UiManager.instance.gameObjects[1].SetActive(true);
         UiManager.instance.gameObjects[2].SetActive(true);
+        UiManager.instance.gameObjects[3].SetActive(true);
+        UiManager.instance.gameObjects[4].SetActive(true);
+        UiManager.instance.gameObjects[5].SetActive(true);
 
         for (int i = 1; i < _buttonPositions.Capacity; i++)
         {
@@ -340,7 +398,10 @@ public class MultiplayerCharSelect : MonoBehaviourPunCallbacks
         }
 
         AnimateCharacterNameAndSplashArt();
+        AnimateEnemyCharacterNameSplashArt();
         MoveButtonHighlight();
+        MoveButtonHighlight2();
+
         yield break;
     }
 

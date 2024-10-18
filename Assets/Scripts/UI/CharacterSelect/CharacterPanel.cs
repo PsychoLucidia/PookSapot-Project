@@ -1,9 +1,10 @@
 using System.Collections;
 using System.Collections.Generic;
+using Photon.Pun;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class CharacterPanel : MonoBehaviour
+public class CharacterPanel : MonoBehaviourPunCallbacks
 {
     [Header("Assets")]
     public FighterInfo[] fighterInfo;

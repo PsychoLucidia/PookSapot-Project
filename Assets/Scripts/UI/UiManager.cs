@@ -11,9 +11,6 @@ public class UiManager : MonoBehaviour
     public GameObject[] gameObjects;
     public GameObject[] enableObject;
 
-    [Header("List")]
-    public List<IUIDialogue> dialogueList = new List<IUIDialogue>();
-
     [Header("Fader")]
     public GameObject faderObj;
     void Awake()
