@@ -159,20 +159,49 @@ public class MultiplayerCharSelect : MonoBehaviourPunCallbacks
         photonView.RPC("OnChangeIndex", RpcTarget.All, localActorNumber, newIndex);
     }
 
-    public void SelectCharacter()
+    public void SelectCharacter(int actNumber)
     {
-        if (!_isCharacterSelected)
+        switch (localActorNumber)
         {
-            GameManager.instance.playerInfo = fighterInfo[currentSelIndex];
-
-            int enemyRandomizer = Random.Range(0, fighterInfo.Length);
-            GameManager.instance.enemyInfo = fighterInfo[enemyRandomizer];
-            // AnimateEnemyCharacterNameSplashArt();
-
-            _isCharacterSelected = true;
-
-            _characterSelectedCoroutine = StartCoroutine(OnCharacterSelected());
+            case 1:
+                if (!_isCharacterSelected && actNumber == localActorNumber)
+                {
+                    photonView.RPC("P1Select", RpcTarget.All);
+                }
+                break;
+            case 2:
+                if (!_isCharacterSelected2 && actNumber == localActorNumber)
+                {
+                    photonView.RPC("P2Select", RpcTarget.All);
+                }
+                break;
+            default:
+                break;
         }
+    }
+
+    /// <summary>
+    /// Called when the player on actor number 1 selects a character.
+    /// </summary>
+    /// <remarks>
+    /// This function is called on all clients when the player on actor number 1 selects a character.
+    /// It sets the player information of the game manager to the selected fighter information.
+    /// </remarks>
+    [PunRPC]
+    void P1Select()
+    {
+        // Set the player information of the game manager to the selected fighter information
+        GameManager.instance.playerInfo = fighterInfo[currentSelIndex];
+
+        // Set the flag to indicate that a character has been selected
+        _isCharacterSelected = true;
+    }
+
+    [PunRPC]
+    void P2Select()
+    {
+        GameManager.instance.enemyInfo = fighterInfo[currentSelIndex2];
+        _isCharacterSelected2 = true;
     }
 
     #region Set Name & Splash Art

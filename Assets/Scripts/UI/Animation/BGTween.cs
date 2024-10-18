@@ -12,15 +12,25 @@ public class BGTween : MonoBehaviour
     {
         CancelTween();
         InitialScale(1.2f);
-        Scale(1.1f, 2f);
+        Scale(1.1f, 2f, 0);
         InitialCGAlpha(0f);
         CGAlpha(1f, 2f, 3);
     }
 
     // Tween the scale of the Object
-    public void Scale(float scaleSize, float speed)
+    public void Scale(float scaleSize, float speed, int easeType)
     {
-        LeanTween.scale(bgObject.gameObject, new Vector3(scaleSize, scaleSize, 1), speed).setEaseInOutCubic();
+        switch (easeType)
+        {
+            case 0:
+                LeanTween.scale(bgObject.gameObject, new Vector3(scaleSize, scaleSize, 1), speed).setEaseInOutCubic();
+                break;
+            case 1:
+                LeanTween.scale(bgObject.gameObject, new Vector3(scaleSize, scaleSize, 1), speed).setEaseOutCubic();
+                break;
+            default:
+                break;
+        }
     }
 
     public void CGAlpha(float alpha, float speed, int easeType)

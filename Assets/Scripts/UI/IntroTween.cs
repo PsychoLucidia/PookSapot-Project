@@ -13,7 +13,7 @@ public class IntroTween : MonoBehaviour
 
     IEnumerator StartAnimation()
     {
-        yield return new WaitForSecondsRealtime(1f);
+        yield return new WaitForSecondsRealtime(3f);
         logoCanvasGroup.alpha = 0;
         LeanTween.alphaCanvas(logoCanvasGroup, 1, 0.5f).setEaseOutExpo();
 

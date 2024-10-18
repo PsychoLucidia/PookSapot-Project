@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class MenuTween : MonoBehaviour
 {
+    public BGTween bgTween;
     public Transform menuTransform;
     public Transform sep1, sep2, sep3; // UI comic separators
     public CanvasGroup menuCanvasGroup;
@@ -33,6 +34,7 @@ public class MenuTween : MonoBehaviour
 
     public void MenuTweening()
     {
+        bgTween.Scale(1f, 0.5f, 1);
         LeanTween.scale(menuTransform.gameObject, new Vector3(1, 1, 1), 0.5f).setEaseOutExpo();
 
         LeanTween.moveLocal(sep1.gameObject, new Vector3(265, 0, 0), 0.5f).setEaseOutExpo();
